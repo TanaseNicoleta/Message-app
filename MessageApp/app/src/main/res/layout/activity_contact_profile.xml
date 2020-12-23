@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContactProfileActivity">
+
+    <ListView
+        android:id="@+id/lv_contacts_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <ListView
+        android:id="@+id/lv_credits_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lv_contacts_details"/>
+
+
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_editeaza_contact"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/editeaza"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/btn_sterge_contact"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/btn_trimite_mesaj"-->
+<!--        tools:layout_editor_absoluteY="541dp" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_sterge_contact"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/sterge"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/btn_editeaza_contact"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/btn_mesaje_anterioare"-->
+<!--        tools:layout_editor_absoluteY="541dp" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_trimite_mesaj"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/trimite_mesaj"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/btn_vezi_credite"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/btn_mesaje_anterioare"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_mesaje_anterioare"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/mesaje_anterioare"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/btn_vezi_credite"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/btn_trimite_mesaj" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_vezi_credite"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:text="@string/credite"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.517"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

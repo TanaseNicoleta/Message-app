@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <EditText
+        android:id="@+id/input_denumire_credit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_format_align_justify_24"
+        android:drawableLeft="@drawable/ic_baseline_format_align_justify_24"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="@string/denumire_credit"
+        android:inputType="text"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/input_suma_imprumutata"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_attach_money_24"
+        android:drawableLeft="@drawable/ic_baseline_attach_money_24"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="@string/suma_imprumutata"
+        android:inputType="number"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_denumire_credit" />
+
+    <EditText
+        android:id="@+id/input_dobanda"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_monetization_on_24"
+        android:drawableLeft="@drawable/ic_baseline_monetization_on_24"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="@string/dobanda"
+        android:inputType="number"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_suma_imprumutata" />
+
+    <EditText
+        android:id="@+id/input_durata_ani"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_access_time_24"
+        android:drawableLeft="@drawable/ic_baseline_access_time_24"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="@string/durata_ani"
+        android:inputType="number"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_dobanda" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
