@@ -57,5 +57,16 @@
     <string name="click_and_edit">Click and edit</string>
     <string name="contact_edit">Editare contact</string>
     <string name="edit_credit">Editeaza credit</string>
+    <string name="bankActivity_bank_name">Bank Name</string>
+    <string name="bankActivity_bank_adress">Bank Adress</string>
+    <string name="bankActivity_commission">Commission</string>
+    <string name="lv_bank_dafault">-</string>
+    <string name="edit_bank_comision">Comision</string>
+    <string name="denumire_banca_edit">Denumire banca</string>
+    <string name="edit_commission">Editeaza comision</string>
+    <string name="invalid_commission_error">Completati comisionul</string>
+    <string name="comision_edit_salveaza">Salveaza</string>
+    <string name="commission_edit_renunta">Renunta</string>
+    <string name="dialog_edit_commission">Modificare comision</string>
 
 </resources>

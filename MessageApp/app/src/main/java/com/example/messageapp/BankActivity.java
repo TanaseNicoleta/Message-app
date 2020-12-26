@@ -6,9 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.messageapp.adapters.BankAdapter;
+import com.example.messageapp.dialogs.EditBankDialog;
 import com.example.messageapp.util.Bank;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -38,6 +42,9 @@ public class BankActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_view_detalii_banca);
         bottomNavigationView.setOnNavigationItemSelectedListener(addBottomNavView());
         addLvBank();
+
+        lvBank.setOnItemClickListener(openEditBankDialog());
+
     }
     private BottomNavigationView.OnNavigationItemSelectedListener addBottomNavView() {
         return new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -66,15 +73,29 @@ public class BankActivity extends AppCompatActivity {
             }
         };
     }
+
+
+
     private void notifyAdapter() {
         ArrayAdapter adapter = (ArrayAdapter) lvBank.getAdapter();
         adapter.notifyDataSetChanged();
     }
 
     private void addLvBank() {
-        ArrayAdapter<Bank> adapter = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1,
-                bankList);
+        BankAdapter adapter = new BankAdapter(getApplicationContext(), R.layout.lv_bank, bankList, getLayoutInflater());
         lvBank.setAdapter(adapter);
+    }
+
+    private AdapterView.OnItemClickListener openEditBankDialog() {
+        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                EditBankDialog editBankDialog = new EditBankDialog();
+                editBankDialog.show(getSupportFragmentManager(), getString(R.string.dialog_edit_commission));
+            }
+        };
+        return onItemClickListener;
+
     }
 }
