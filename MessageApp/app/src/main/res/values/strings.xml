@@ -65,8 +65,14 @@
     <string name="denumire_banca_edit">Denumire banca</string>
     <string name="edit_commission">Editeaza comision</string>
     <string name="invalid_commission_error">Completati comisionul</string>
-    <string name="comision_edit_salveaza">Salveaza</string>
-    <string name="commission_edit_renunta">Renunta</string>
     <string name="dialog_edit_commission">Modificare comision</string>
+    <string name="start">Start</string>
+    <string name="log_in">Log In</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="parola">Parola</string>
+    <string name="email">Email</string>
+    <string name="log_out">Log Out</string>
+    <string name="update_profile">Update profile</string>
 
 </resources>

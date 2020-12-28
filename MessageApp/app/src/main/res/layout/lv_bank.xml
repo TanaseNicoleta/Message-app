@@ -3,18 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/backgroundColor"
     >
 
     <ImageView
         android:id="@+id/bank_icon"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="10dp"
         android:src="@drawable/ic_baseline_account_balance_24"
-        app:tint="@color/textColor"
+        app:tint="@color/startColor3"
         />
     <TextView
         android:id="@+id/tv_bank_name"
@@ -29,7 +28,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_bank_adress"
         android:layout_marginLeft="55dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/textColor"
+        android:textColor="@color/startColor3"
         android:textStyle="bold"
         android:gravity="left"
         android:textAlignment="gravity"
@@ -45,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginLeft="55dp"
         android:layout_marginTop="5dp"
-        android:textColor="@color/textColor"
+        android:textColor="@color/startColor3"
         android:gravity="left"
         android:textAlignment="gravity"
         />
@@ -62,7 +61,7 @@
         android:layout_marginLeft="55dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="8dp"
-        android:textColor="@color/textColor"
+        android:textColor="@color/startColor3"
         android:gravity="left"
         android:textAlignment="gravity"
         />

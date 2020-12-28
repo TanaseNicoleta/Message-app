@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BankActivity extends AppCompatActivity {
+public class BankActivity extends AppCompatActivity implements EditBankDialog.EditBankDialogListener {
     public static final String BANK_LIST = "Bank list";
 
     private BottomNavigationView bottomNavigationView;
@@ -46,6 +46,37 @@ public class BankActivity extends AppCompatActivity {
         lvBank.setOnItemClickListener(openEditBankDialog());
 
     }
+
+    private void notifyAdapter() {
+        ArrayAdapter adapter = (ArrayAdapter) lvBank.getAdapter();
+        adapter.notifyDataSetChanged();
+    }
+
+    private void addLvBank() {
+        BankAdapter adapter = new BankAdapter(getApplicationContext(), R.layout.lv_bank, bankList, getLayoutInflater());
+        lvBank.setAdapter(adapter);
+    }
+
+    private AdapterView.OnItemClickListener openEditBankDialog() {
+        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                EditBankDialog editBankDialog = new EditBankDialog();
+                editBankDialog.show(getSupportFragmentManager(), getString(R.string.dialog_edit_commission));
+            }
+        };
+        return onItemClickListener;
+
+    }
+
+    @Override
+    public void applyTexts(float comision) {
+        int pos = lvBank.getSelectedItemPosition();
+        Bank banca = (Bank) lvBank.getItemAtPosition(pos);
+        banca.setComision(comision);
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener addBottomNavView() {
         return new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -72,30 +103,5 @@ public class BankActivity extends AppCompatActivity {
                 return false;
             }
         };
-    }
-
-
-
-    private void notifyAdapter() {
-        ArrayAdapter adapter = (ArrayAdapter) lvBank.getAdapter();
-        adapter.notifyDataSetChanged();
-    }
-
-    private void addLvBank() {
-        BankAdapter adapter = new BankAdapter(getApplicationContext(), R.layout.lv_bank, bankList, getLayoutInflater());
-        lvBank.setAdapter(adapter);
-    }
-
-    private AdapterView.OnItemClickListener openEditBankDialog() {
-        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                EditBankDialog editBankDialog = new EditBankDialog();
-                editBankDialog.show(getSupportFragmentManager(), getString(R.string.dialog_edit_commission));
-            }
-        };
-        return onItemClickListener;
-
     }
 }
