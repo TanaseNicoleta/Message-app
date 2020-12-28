@@ -8,17 +8,6 @@
     <string name="mesaje">Mesaje</string>
     <string name="rapoarte">Rapoarte</string>
 
-    <string name="main_signUp">Sign Up</string>
-    <string name="main_logIn">Log In</string>
-    <string name="signUp_firstName">First Name</string>
-    <string name="signUp_lastName">Last Name</string>
-    <string name="signUp_Email">Email</string>
-    <string name="signUp_male">Male</string>
-    <string name="signUp_female">Female</string>
-    <string name="signUp_password">Password</string>
-    <string name="addContactActivity_add_contact">Add Contact</string>
-    <string name="addContact_phone">Phone</string>
-    <string name="addContact_birthDate">Birth Date</string>
     <string name="nume">Nume</string>
     <string name="prenume">Prenume</string>
     <string name="telefon">Telefon</string>
@@ -34,7 +23,7 @@
     <string name="credit">Credit</string>
     <string name="adauga">Adauga</string>
     <string name="dialog">dialog</string>
-    <string name="invalid_denumire_credit_error">Completati denumire credit!</string>
+    <string name="invalid_denumire_credit_error">Completati denumire credit</string>
     <string name="invalid_suma_field_error">Completati campul suma</string>
     <string name="invalid_dobanda_error">Completati dobanda</string>
     <string name="invalid_durata_error">Completati durata creditului</string>
@@ -54,30 +43,26 @@
     <string name="mesaje_anterioare">Mesaje anterioare</string>
     <string name="salveaza">Salveaza</string>
     <string name="renunta">Renunta</string>
-    <string name="click_and_edit">Click and edit</string>
+    <string name="click_and_edit">Editare</string>
     <string name="contact_edit">Editare contact</string>
     <string name="edit_credit">Editeaza credit</string>
-    <string name="bankActivity_bank_name">Bank Name</string>
-    <string name="bankActivity_bank_adress">Bank Adress</string>
-    <string name="bankActivity_commission">Commission</string>
+    <string name="bankActivity_bank_adress">Adresa banca</string>
     <string name="lv_bank_dafault">-</string>
-    <string name="edit_bank_comision">Comision</string>
-    <string name="denumire_banca_edit">Denumire banca</string>
+    <string name="bank_comision">Comision</string>
+    <string name="denumire_banca">Denumire banca</string>
     <string name="edit_commission">Editeaza comision</string>
     <string name="invalid_commission_error">Completati comisionul</string>
     <string name="dialog_edit_commission">Modificare comision</string>
-    <string name="start">Start</string>
-    <string name="log_in">Log In</string>
-    <string name="register">Register</string>
-    <string name="username">Username</string>
+    <string name="log_in">Conecteaza-te</string>
+    <string name="register">Inregistreaza-te</string>
     <string name="parola">Parola</string>
     <string name="email">Email</string>
-    <string name="log_out">Log Out</string>
-    <string name="update_profile">Update profile</string>
-    <string name="long_click_end_delete">Long click end delete</string>
+    <string name="log_out">Delogheaza-te</string>
+    <string name="update_profile">Editare profil</string>
+    <string name="long_click_end_delete">Apasa lung ca sa stergi</string>
     <string name="mesaj_aniversar">Mesaj aniversar</string>
-    <string name="update_suma_cont">Update suma cont</string>
-    <string name="update_dobanda">Update dobanda</string>
+    <string name="update_suma_cont">Editare suma cont</string>
+    <string name="update_dobanda">Editare dobanda</string>
     <string name="terminare_credit">Terminare credit</string>
 
     <string name="mesajLMA">Draga %1$s, in aceasta zi speciala echipa noastra iti ureaza La multi ani!</string>
@@ -95,10 +80,22 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="clientii_care_au_credite_de_peste_6000_lei">Clientii care au credite de peste 6000 lei</string>
-    <string name="long_click_and_delete">Long click and delete</string>
-    <string name="click_and_see_more">Click and see more</string>
-    <string name="long_click">Long click</string>
-    <string name="click">Click</string>
+    <string name="long_click_and_delete">Apasa lung ca sa stergi</string>
+    <string name="click_and_see_more">Apasa aici ca sa vezi mai mult</string>
+    <string name="long_click">Apasa lung</string>
+    <string name="click">Apasa</string>
     <string name="nume_contact_ultimul_mesaj">Ultimul mesaj trimis contactului %1$s %2$s</string>
+    <string name="forgot_password">Mi-am uitat parola</string>
+    <string name="reset_password">Resetare parola</string>
+    <string name="email_err">Completati cu un email valid</string>
+    <string name="inform_email_has_been_sent">Mailul de resetare a parolei v-a fost trimis.</string>
+    <string name="mesaj_welcome">Bine ati venit!</string>
+    <string name="msj_error">Ups... Se pare ca este o problema...</string>
+    <string name="err_name">Completati numele</string>
+    <string name="err_prenume">Completati prenumele</string>
+    <string name="err_telefon">Completati numarul de telefon</string>
+    <string name="err_email">Completati cu un email valid</string>
+    <string name="err_parola">Parola trebuie sa contina cel putin 8 caractere</string>
+    <string name="auth_failed">Nu v-ati putut autentifica.</string>
 
 </resources>

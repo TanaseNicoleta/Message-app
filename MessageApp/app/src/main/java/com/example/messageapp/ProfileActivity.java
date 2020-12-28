@@ -7,11 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.messageapp.dialogs.EditBankDialog;
+import com.example.messageapp.dialogs.UpdateUserProfileDialog;
 import com.example.messageapp.util.Bank;
 import com.example.messageapp.util.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -48,25 +51,22 @@ public class ProfileActivity extends AppCompatActivity {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
         final String userId = user.getUid();
 
-        database.addValueEventListener(new ValueEventListener() {
+        database.child(userId).addValueEventListener(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot snapshot) {
-                 for(DataSnapshot data: snapshot.getChildren()) {
-                     if(data.getKey() == userId)
-                     {   User profile = data.getValue(User.class);
+                   User profile = snapshot.getValue(User.class);
                          if(profile != null) {
                              tvNume.setText(profile.getNume());
                              tvPrenume.setText(profile.getPrenume());
                              tvEmail.setText(profile.getEmail());
                              tvTelefon.setText(profile.getTelefon());
                          }
-                     }
                  }
-             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(ProfileActivity.this, "Looks like something went wrong :(", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, R.string.msj_error, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -78,7 +78,22 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        updateUser.setOnClickListener(openUpdateProfileDialog());
     }
+
+    private AdapterView.OnClickListener openUpdateProfileDialog() {
+        AdapterView.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UpdateUserProfileDialog updateProfileDialog = new UpdateUserProfileDialog();
+                updateProfileDialog.show(getSupportFragmentManager(), String.valueOf(R.id.update_profile));
+            }
+        };
+        return onClickListener;
+    }
+
+
     private void initComponents() {
         tvNume = findViewById(R.id.display_nume);
         tvPrenume = findViewById(R.id.display_prenume);

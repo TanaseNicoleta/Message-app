@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/input_nume_edit_user_dialog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="32dp"
+        android:drawableStart="@drawable/ic_baseline_format_align_justify_24"
+        android:drawableLeft="@drawable/ic_baseline_format_align_justify_24"
+        android:hint="@string/nume"
+        android:inputType="text"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/input_prenume_edit_user_dialog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:drawableStart="@drawable/ic_baseline_format_align_justify_24"
+        android:drawableLeft="@drawable/ic_baseline_format_align_justify_24"
+        android:hint="@string/prenume"
+        android:inputType="text"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_nume_edit_user_dialog" />
+
+    <EditText
+        android:id="@+id/input_telefon_edit_user_dialog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:drawableStart="@drawable/ic_baseline_local_phone_24"
+        android:drawableLeft="@drawable/ic_baseline_local_phone_24"
+        android:hint="@string/telefon"
+        android:inputType="number"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_prenume_edit_user_dialog" />
+
+    <EditText
+        android:id="@+id/input_email_edit_user_dialog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:hint="@string/email"
+        android:inputType="text"
+        android:padding="8dp"
+        android:drawableStart="@drawable/ic_baseline_alternate_email_24"
+        android:drawableLeft="@drawable/ic_baseline_alternate_email_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_telefon_edit_user_dialog" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.messageapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +15,13 @@ import android.widget.Toast;
 
 import com.example.messageapp.firebase.FirebaseService;
 import com.example.messageapp.util.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -32,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         initComponents();
 
-        firebaseService = FirebaseService.getInstance();
+        final DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
         mAuth = FirebaseAuth.getInstance();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -40,20 +46,35 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (validate()) {
                     String id = null;
-                    String Nume = nume.getText().toString();
-                    String Prenume = prenume.getText().toString();
-                    String Email = email.getText().toString();
-                    String Telefon = telefon.getText().toString();
-                    String Parola = parola.getText().toString();
+                    final String Nume = nume.getText().toString().trim();
+                    final String Prenume = prenume.getText().toString().trim();
+                    final String Email = email.getText().toString().trim();
+                    final String Telefon = telefon.getText().toString().trim();
+                    final String Parola = parola.getText().toString().trim();
 
-                    User user = new User(null, Nume, Prenume, Email, Telefon, Parola);
-                    firebaseService.upsert(user);
-                    mAuth.createUserWithEmailAndPassword(Email, Parola);
 
-                    Toast.makeText(RegisterActivity.this, "Welcome dear user!", Toast.LENGTH_SHORT).show();
-                    finish();
+                    mAuth.createUserWithEmailAndPassword(Email, Parola).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()) {
+                                User user = new User(null, Nume, Prenume, Email, Telefon, Parola);
+                                database.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()) {
+                                            Toast.makeText(RegisterActivity.this, R.string.mesaj_welcome, Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        } else
+                                            Toast.makeText(RegisterActivity.this, R.string.msj_error, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+
                 } else
-                    Toast.makeText(RegisterActivity.this, "Ups... Looks like there is a problem... Pay more attention please", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.msj_error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -70,23 +91,23 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean validate() {
         if(nume == null || nume.getText().toString().trim().isEmpty()) {
-            nume.setError("Completati numele");
+            nume.setError(getString(R.string.err_name));
             return false;
         }
         if(prenume == null || prenume.getText().toString().trim().isEmpty()) {
-            prenume.setError("Completati prenumele");
+            prenume.setError(getString(R.string.err_prenume));
             return false;
         }
         if(telefon == null || telefon.getText().toString().trim().isEmpty() || !Patterns.PHONE.matcher(telefon.getText()).matches()) {
-            telefon.setError("Completati numarul de telefon");
+            telefon.setError(getString(R.string.err_telefon));
             return false;
         }
         if(email == null || email.getText().toString().trim().isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
-            email.setError("Completati cu un email valid");
+            email.setError(getString(R.string.err_email));
             return false;
         }
         if(parola == null || parola.getText().toString().trim().isEmpty() || parola.getText().toString().trim().length()<8) {
-            parola.setError("Parola trebuie sa contina cel putin 8 caractere");
+            parola.setError(getString(R.string.err_parola));
             return false;
         }
 

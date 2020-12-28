@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LogInActivity extends AppCompatActivity {
 
     private EditText etEmail, etParola;
+    private TextView tvForgotPass;
     private Button btnLogIn;
     private FirebaseAuth mAuth;
 
@@ -42,15 +44,11 @@ public class LogInActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.i("Mesaj", "signInWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                     } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.d("Mesaj", "signInWithEmail:failure", task.getException());
-                                        Toast.makeText(LogInActivity.this, "Authentication failed.",
+                                        Toast.makeText(LogInActivity.this, R.string.auth_failed,
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -59,9 +57,19 @@ public class LogInActivity extends AppCompatActivity {
                 }
             }
         });
+
+        tvForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initComponents() {
+        tvForgotPass = findViewById(R.id.tv_forgot_password);
         etEmail = findViewById(R.id.et_email);
         etParola = findViewById(R.id.et_parola);
         btnLogIn = findViewById(R.id.log_in);
@@ -72,11 +80,11 @@ public class LogInActivity extends AppCompatActivity {
         String parola = etParola.getText().toString().trim();
 
         if(email == null || email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Completati cu un email valid");
+            etEmail.setError(getString(R.string.err_email));
             return false;
         }
         if(parola == null || parola.isEmpty() || parola.length()<8) {
-            etParola.setError("Parola trebuie sa contina cel putin 8 caractere");
+            etParola.setError(getString(R.string.err_parola));
             return false;
         }
 
