@@ -1,8 +1,12 @@
 package com.example.messageapp.database.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Insert;
 import androidx.room.PrimaryKey;
 
 import com.example.messageapp.util.DateConverter;
@@ -11,7 +15,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "contacte")
-public class Contact implements Serializable {
+public class Contact implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -34,6 +38,31 @@ public class Contact implements Serializable {
 
     @ColumnInfo(name="sumaCont")
     private float sumaCont;
+
+    @Ignore
+    protected Contact(Parcel in) {
+        id = in.readLong();
+        nume = in.readString();
+        prenume = in.readString();
+        telefon = in.readString();
+        String data=in.readString();
+        dataNasterii=DateConverter.fromString(data);
+        gen = in.readString();
+        sumaCont = in.readFloat();
+    }
+
+    @Ignore
+    public static final Creator<Contact> CREATOR = new Creator<Contact>() {
+        @Override
+        public Contact createFromParcel(Parcel in) {
+            return new Contact(in);
+        }
+
+        @Override
+        public Contact[] newArray(int size) {
+            return new Contact[size];
+        }
+    };
 
     public String getGen() {
         return gen;
@@ -121,5 +150,23 @@ public class Contact implements Serializable {
                 ", gen='" + gen + '\'' +
                 ", sumaCont=" + sumaCont +
                 '}';
+    }
+
+    @Ignore
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Ignore
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(nume);
+        dest.writeString(prenume);
+        dest.writeString(telefon);
+        dest.writeString(DateConverter.fromDate(dataNasterii));
+        dest.writeString(gen);
+        dest.writeFloat(sumaCont);
     }
 }

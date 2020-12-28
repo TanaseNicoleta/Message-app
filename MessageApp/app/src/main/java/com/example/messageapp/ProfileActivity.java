@@ -62,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
                          }
                      }
                  }
-                 }
+             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -26,7 +26,6 @@ public class CustomDialog  extends AppCompatDialogFragment {
     private CustomDialogListener listener;
     private Credit credit;
 
-
     @NonNull
     @Override
     public android.app.Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.messageapp.adapters.ContactProfileAdapter;
+import com.example.messageapp.adapters.CreditAdapter;
 import com.example.messageapp.asyncTask.Callback;
 import com.example.messageapp.database.model.Contact;
 import com.example.messageapp.database.model.Credit;
@@ -22,11 +25,18 @@ import com.example.messageapp.dialogs.EditCreditDialog;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ContactProfileActivity extends AppCompatActivity implements EditContactDialog.EditContactDialogListener,
-EditCreditDialog.EditCreditDialogListener{
+        EditCreditDialog.EditCreditDialogListener{
+
     public static final String EDIT_CONTACT_KEY = "Edit contact key";
     public static final String CONTACT_PROFILE_KEY = "Contact profile";
     public static final String EDIT_CREDIT_KEY = "Edit credit key";
+    public static final String CONTACT_KEY_SEND_MESSAGE = "contact key send message";
+    public static final String CREDIT_EDITAT_SEND_MESSAJE = "credit editat send messaje";
+    public static final String CREDIT_STERS_SEND_MESSAGE = "credit sters send message";
+    public static final String SUMA_CONT_FINALA_KEY = "suma cont finala key";
+    public static final String MESAJ_ANTERIOR_CONTACT = "mesaj anterior";
 
     private ListView lvContact;
     private ListView lvCredits;
@@ -37,6 +47,16 @@ EditCreditDialog.EditCreditDialogListener{
     private Intent intent;
     private Contact contact;
 
+    private ImageView trimiteMesaj;
+    private ImageView mesajAnterior;
+
+    Credit creditEditat;
+    Credit creditSters;
+
+    private float dobandaInitiala;
+    private float dobandaFinala;
+    private float sumaContInitial;
+    private float sumaContFinal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +64,7 @@ EditCreditDialog.EditCreditDialogListener{
         setContentView(R.layout.activity_contact_profile);
 
         intent=getIntent();
-        contact=(Contact)intent.getSerializableExtra(CONTACT_PROFILE_KEY);
+        contact=intent.getParcelableExtra(CONTACT_PROFILE_KEY);
 
         contactService=new ContactService(getApplicationContext());
         contactService.getInfoAboutOneContact(getInfoForOneContactDbCallback(),contact);
@@ -53,6 +73,7 @@ EditCreditDialog.EditCreditDialogListener{
         creditService.getAllCreditsForOneContact(getCreditsForOneContactFromDbCallback(),contact.getId());
 
         initComponents();
+
     }
 
     private Callback<Contact> getInfoForOneContactDbCallback() {
@@ -67,7 +88,6 @@ EditCreditDialog.EditCreditDialogListener{
         };
     }
 
-    //fac un get pt CREDITE
     private Callback<List<Credit>> getCreditsForOneContactFromDbCallback() {
         return new Callback<List<Credit>>() {
             @Override
@@ -83,20 +103,58 @@ EditCreditDialog.EditCreditDialogListener{
     private void initComponents(){
         lvContact=findViewById(R.id.lv_contacts_details);
         lvCredits=findViewById(R.id.lv_credits_details);
+        trimiteMesaj=findViewById(R.id.iv_trimite_mesaj);
+        mesajAnterior=findViewById(R.id.iv_mesaje_anterioare);
         addLvContact();
         addLvCredits();
         lvContact.setOnItemClickListener(openEditContactDialog());
-        //la click pe credit se deschide dialogul de editare credit
         lvCredits.setOnItemClickListener(openEditCreditDialog());
+        lvCredits.setOnItemLongClickListener(stergeCreditEventListener());
+        trimiteMesaj.setOnClickListener(openSendMessageActivity());
+        mesajAnterior.setOnClickListener(openPreviousMessageActivity());
+    }
 
-        //la long click sterg creditul
-        lvCredits.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+    private View.OnClickListener openPreviousMessageActivity() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(), PreviousMessageActivity.class);
+                intent.putExtra(MESAJ_ANTERIOR_CONTACT, contact);
+                startActivity(intent);
+            }
+        };
+    }
+
+    private View.OnClickListener openSendMessageActivity() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(), SendMessageActivity.class);
+
+                intent.putExtra(CONTACT_KEY_SEND_MESSAGE, contact);
+
+                if(sumaContFinal!=sumaContInitial){
+                    intent.putExtra(SUMA_CONT_FINALA_KEY,sumaContFinal);
+                }
+
+                if(dobandaFinala!=dobandaInitiala){
+                    intent.putExtra(CREDIT_EDITAT_SEND_MESSAJE, creditEditat);
+                }
+                intent.putExtra(CREDIT_STERS_SEND_MESSAGE, creditSters);
+                startActivity(intent);
+            }
+        };
+    }
+
+    private AdapterView.OnItemLongClickListener stergeCreditEventListener() {
+        return new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 creditService.delete(deleteCreditDbCallback(position),credits.get(position));
+                creditSters=credits.get(position);
                 return true;
             }
-        });
+        };
     }
 
     private Callback<Integer> deleteCreditDbCallback(final int position) {
@@ -117,9 +175,12 @@ EditCreditDialog.EditCreditDialogListener{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 EditCreditDialog editCreditDialog=new EditCreditDialog();
                 Bundle bundle=new Bundle();
-                bundle.putSerializable(EDIT_CREDIT_KEY, credits.get(position));
+                bundle.putParcelable(EDIT_CREDIT_KEY, credits.get(position));
                 editCreditDialog.setArguments(bundle);
                 editCreditDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+
+                dobandaInitiala=credits.get(position).getDobanda();
+                creditEditat=credits.get(position);
             }
         };
     }
@@ -130,9 +191,10 @@ EditCreditDialog.EditCreditDialogListener{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 EditContactDialog dialog=new EditContactDialog();
                 Bundle bundle=new Bundle();
-                bundle.putSerializable(EDIT_CONTACT_KEY,contacts.get(position));
+                bundle.putParcelable(EDIT_CONTACT_KEY,contacts.get(position));
                 dialog.setArguments(bundle);
                 dialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+                sumaContInitial=contacts.get(position).getSumaCont();
             }
         };
     }
@@ -147,9 +209,7 @@ EditCreditDialog.EditCreditDialogListener{
     }
 
     private void addLvCredits() {
-        ArrayAdapter<Credit> adapter = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1,
-                credits);
+        CreditAdapter adapter=new CreditAdapter(getApplicationContext(),R.layout.lv_credit,credits,getLayoutInflater());
         lvCredits.setAdapter(adapter);
     }
 
@@ -174,6 +234,7 @@ EditCreditDialog.EditCreditDialogListener{
                             contact.setTelefon(result.getTelefon());
                             contact.setDataNasterii(result.getDataNasterii());
                             contact.setSumaCont(result.getSumaCont());
+                            sumaContFinal=result.getSumaCont();
                             break;
                         }
                     }
@@ -193,6 +254,7 @@ EditCreditDialog.EditCreditDialogListener{
                             credit.setDenumireCredit(result.getDenumireCredit());
                             credit.setSumaImprumutata(result.getSumaImprumutata());
                             credit.setDobanda(result.getDobanda());
+                            dobandaFinala=result.getDobanda();
                             credit.setDurataAni(result.getDurataAni());
                             break;
                         }

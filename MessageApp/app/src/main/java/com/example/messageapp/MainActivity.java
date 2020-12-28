@@ -3,6 +3,7 @@ package com.example.messageapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,23 +36,22 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String BANK_LIST = "Bank list";
     public static final int ADD_CONTACT_REQUEST_CODE = 200;
-    private final String URL="https://jsonkeeper.com/b/GSUE";
+    private final String URL="https://jsonkeeper.com/b/PLL6";
     private BottomNavigationView bottomNavigationView;
     private List<Contact> contacts=new ArrayList<>();
-    private List<Bank>bankList=new ArrayList<>();
     private List<Credit>credits=new ArrayList<>();
+    private List<Bank>bankList=new ArrayList<>();
+
     private AsyncTaskRunner asyncTaskRunner = new AsyncTaskRunner();
 
-    private Button btnAdaugaContact;
-    private Button btnContacte;
-    private Button btnMesaje;
-    private Button btnRapoarte;
+    private CardView btnContacte;
+    private CardView btnAdaugaContact;
+    private CardView btnMesaje;
+    private CardView  btnRapoarte;
 
     private ContactService contactService;
-    private CreditService creditService;
 
     private List<Contact>contactsAux=new ArrayList<>();
-    private List<Credit>creditsAux=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         getDatasFromHttp();
         initComponents();
         contactService = new ContactService(getApplicationContext());
-        creditService=new CreditService(getApplicationContext());
-
         //ca sa verific daca bd e null
         contactService.getAllContacts(getAllContactsFromDbCallback());
     }
@@ -78,18 +76,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
-        btnContacte=findViewById(R.id.btn_contacte);
-        btnAdaugaContact=findViewById(R.id.btn_adauga_contact);
-        btnRapoarte=findViewById(R.id.btn_rapoarte);
-        btnMesaje=findViewById(R.id.btn_mesaje);
+
+        btnContacte=findViewById(R.id.cv_contacte);
+        btnAdaugaContact=findViewById(R.id.cv_adauga_contact);
+        btnMesaje=findViewById(R.id.cv_mesaje);
+        btnRapoarte=findViewById(R.id.cv_rapoarte);
         bottomNavigationView=findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_view_acasa);
         bottomNavigationView.setOnNavigationItemSelectedListener(addBottomNavView());
-
         btnContacte.setOnClickListener(openContactsActivity());
-
         //ADAUGAM CONTACT => FACEM TRANSFER INTRE PARAMETRII
         btnAdaugaContact.setOnClickListener(AddContactClickEventListener());
+        btnMesaje.setOnClickListener(openMessagesActivity());
+        btnRapoarte.setOnClickListener(openRaportsActivity());
+    }
+
+    private View.OnClickListener openRaportsActivity() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(), RaportsActivity.class);
+                startActivity(intent);
+            }
+        };
+    }
+
+    private View.OnClickListener openMessagesActivity() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(), MessagesActivity.class);
+                startActivity(intent);
+            }
+        };
     }
 
     @Override
@@ -98,13 +117,16 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == ADD_CONTACT_REQUEST_CODE
                 && resultCode == RESULT_OK && data != null) {
             ContactWithCredits contactWithCredits = (ContactWithCredits) data
-                    .getSerializableExtra(AddContactActivity.CONTACT_WITH_CREDITS_KEY);
+                    .getParcelableExtra(AddContactActivity.CONTACT_WITH_CREDITS_KEY);
 
             if (contactWithCredits != null) {
                 if(contactWithCredits.credits==null){
                     contactService.insert(insertContactIntoDbCallback(), contactWithCredits.contact);
+                    Log.i("Contact simplu",contactWithCredits.contact.toString());
                 }else{
                     contactService.insert(contactWithCredits);
+                    Log.i("Contact cu credite",contactWithCredits.toString());
+
                 }
             }
         }

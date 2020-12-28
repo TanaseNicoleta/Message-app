@@ -6,4 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".MessagesActivity">
 
+    <TextView
+        android:id="@+id/tv_titlu_mesaje_trimise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/mesajele_trimise_de_tine"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/startColor2"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal" />
+
+    <ListView
+        android:id="@+id/lv_mesaje_trimise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_titlu_mesaje_trimise" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

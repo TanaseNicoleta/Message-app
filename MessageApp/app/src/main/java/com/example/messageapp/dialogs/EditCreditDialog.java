@@ -36,7 +36,9 @@ public class EditCreditDialog extends AppCompatDialogFragment {
         View view=inflater.inflate(R.layout.layout_edit_credit_dialog,null);
 
         bundle=getArguments();
-        credit= (Credit) bundle.getSerializable(EDIT_CREDIT_KEY);
+        if(bundle!=null) {
+            credit = bundle.getParcelable(EDIT_CREDIT_KEY);
+        }
 
         builder.setView(view)
                 .setTitle(R.string.edit_credit)

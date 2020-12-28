@@ -1,5 +1,6 @@
 package com.example.messageapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,9 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity {
-    public static final String CONTACTS_AUX_LIST = "Contacts aux list";
     public static final String CONTACT_PROFILE_KEY = "Contact profile";
-
     private ListView lvContacts;
     private List<Contact>contacts=new ArrayList<>();
     private ContactService contactService;
@@ -70,15 +69,21 @@ public class ContactsActivity extends AppCompatActivity {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Intent intent=new Intent(getApplicationContext(), CreditsActivity.class);
                 Intent intent=new Intent(getApplicationContext(), ContactProfileActivity.class);
                 intent.putExtra(CONTACT_PROFILE_KEY, contacts.get(position));
                 startActivity(intent);
+
             }
         };
     }
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 
-    //fac un get pt contacte
+    // get pt contacte
     private Callback<List<Contact>> getAllContactsFromDbCallback() {
         return new Callback<List<Contact>>() {
             @Override

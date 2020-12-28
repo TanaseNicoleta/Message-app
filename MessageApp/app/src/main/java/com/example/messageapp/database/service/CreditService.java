@@ -11,6 +11,7 @@ import com.example.messageapp.database.model.Contact;
 import com.example.messageapp.database.model.Credit;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 public class CreditService {
@@ -32,6 +33,18 @@ public class CreditService {
         };
         taskRunner.executeAsync(callable, callback);
     }
+
+//    public void getCreditsAndNumberOfCredits(Callback<Map<String,Integer>> callback) {
+//        Callable<Map<String,Integer>> callable = new Callable<Map<String,Integer>>() {
+//            @Override
+//            public Map<String,Integer>call() {
+//                return creditDao.getCreditsAndNumber();
+//            }
+//        };
+//        taskRunner.executeAsync(callable, callback);
+//    }
+
+
 
     public void getAllCreditsForOneContact(Callback<List<Credit>> callback, final long contactId) {
         Callable<List<Credit>> callable = new Callable<List<Credit>>() {

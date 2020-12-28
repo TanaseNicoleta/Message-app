@@ -46,7 +46,9 @@ public class EditContactDialog extends AppCompatDialogFragment {
         View view=inflater.inflate(R.layout.layout_edit_contact_dialog,null);
 
         bundle=getArguments();
-        contact= (Contact)bundle.getSerializable(EDIT_CONTACT_KEY);
+        if(bundle!=null){
+            contact= bundle.getParcelable(EDIT_CONTACT_KEY);
+        }
 
         builder.setView(view)
                 .setTitle(R.string.contact_edit)

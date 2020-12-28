@@ -74,5 +74,31 @@
     <string name="email">Email</string>
     <string name="log_out">Log Out</string>
     <string name="update_profile">Update profile</string>
+    <string name="long_click_end_delete">Long click end delete</string>
+    <string name="mesaj_aniversar">Mesaj aniversar</string>
+    <string name="update_suma_cont">Update suma cont</string>
+    <string name="update_dobanda">Update dobanda</string>
+    <string name="terminare_credit">Terminare credit</string>
+
+    <string name="mesajLMA">Draga %1$s, in aceasta zi speciala echipa noastra iti ureaza La multi ani!</string>
+    <string name="mesajUpdateSumaCont">Draga %1$s, te anuntam ca ti s-a modificat suma contului. Acum detii %2$6.2f lei.</string>
+    <string name="mesajUpdateDobanda">Draga %1$s, dobanda la creditul tau %2$s s-a modificat la %3$6.2f procente.</string>
+    <string name="mesajTerminareCredit">Draga %1$s, creditul tau %2$s in valoare de %3$6.2f a fost achitat. </string>
+
+    <string name="credit_needitat_error">Nu ati editat dobanda creditului</string>
+    <string name="credit_nesters_error">Nu ati sters niciun credit</string>
+    <string name="suma_cont_needitata_error">Nu ati editat suma cont</string>
+    <string name="separator_de_mesaje">\@</string>
+    <string name="mesajele_trimise_de_tine">Mesajele trimise de tine</string>
+    <string name="tab_title_sarbatoriti">Sarbatoriti</string>
+    <string name="tab_title_indatorati">Indatorati</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="clientii_care_au_credite_de_peste_6000_lei">Clientii care au credite de peste 6000 lei</string>
+    <string name="long_click_and_delete">Long click and delete</string>
+    <string name="click_and_see_more">Click and see more</string>
+    <string name="long_click">Long click</string>
+    <string name="click">Click</string>
+    <string name="nume_contact_ultimul_mesaj">Ultimul mesaj trimis contactului %1$s %2$s</string>
 
 </resources>

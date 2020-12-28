@@ -8,7 +8,10 @@ import androidx.room.Query;
 import androidx.room.Update;
 import com.example.messageapp.database.model.Credit;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Dao
 public interface CreditDao {
 
@@ -17,6 +20,9 @@ public interface CreditDao {
 
     @Query("select * from credite where contactId=:contactId")
     List<Credit> getAllCreditsForOneContact(long contactId);
+
+//    @Query("select denumireCredit , count(denumireCredit) nr from credite group by denumireCredit")
+//    Map<String,Integer> getCreditsAndNumber();
 
     @Insert
     long insert(Credit credit);

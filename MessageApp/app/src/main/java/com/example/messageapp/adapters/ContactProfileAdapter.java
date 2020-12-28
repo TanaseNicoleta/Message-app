@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +21,6 @@ import java.util.Date;
 import java.util.List;
 
 public class ContactProfileAdapter extends ArrayAdapter<Contact> {
-
     private Context context;
     private int resource;
     private List<Contact> contacts;
@@ -47,9 +48,23 @@ public class ContactProfileAdapter extends ArrayAdapter<Contact> {
             adaugaTelefon(view,contact.getTelefon());
             adaugaDataNasterii(view,contact.getDataNasterii());
             adaugaSumaCont(view,contact.getSumaCont());
+            adaugaGen(view, contact.getGen());
             setareAvatar(view,contact.getGen());
         }
         return view;
+    }
+    private void adaugaGen(View view, String gen){
+
+        RadioGroup radioGroup=view.findViewById(R.id.lv_profile_rg_gen);
+        RadioButton rb1=view.findViewById(R.id.lv_profile_rb_feminin);
+        RadioButton rb2=view.findViewById(R.id.lv_profile_rb_masculin);
+        rb1.setEnabled(false);
+        rb2.setEnabled(false);
+        if(gen.equalsIgnoreCase(context.getString(R.string.gen_feminin))){
+            radioGroup.check(R.id.lv_profile_rb_feminin);
+        }else if(gen.equalsIgnoreCase(context.getString(R.string.gen_masculin))){
+            radioGroup.check(R.id.lv_profile_rb_masculin);
+        }
     }
     private void setareAvatar(View view, String gen){
         ImageView avatar=view.findViewById(R.id.iv_avatar);

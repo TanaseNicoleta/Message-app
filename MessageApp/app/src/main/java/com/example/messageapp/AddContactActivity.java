@@ -36,7 +36,6 @@ public class AddContactActivity extends AppCompatActivity implements CustomDialo
     private List<Credit>credits=new ArrayList<>();
 
     private Intent intent;
-    private Contact contact=null;
 
 
     @Override
@@ -67,18 +66,10 @@ public class AddContactActivity extends AppCompatActivity implements CustomDialo
             public void onClick(View v) {
                 if (validate()) {
                     Contact contact = buildContactFromWidgets();
-                    //Pot trimite doar un contact (fara lista de credite)
-                    //Sau pot trimite un Contact with credits
-//                    if(credits==null){
-//                        intent.putExtra(CONTACT_KEY, contact);
-//                        setResult(RESULT_OK,intent);
-//                        finish();
-//                    }else{
                         ContactWithCredits contactWithCredits=new ContactWithCredits(contact,credits);
                         intent.putExtra(CONTACT_WITH_CREDITS_KEY,contactWithCredits);
                         setResult(RESULT_OK,intent);
                         finish();
-//                    }
                 }
             }
         };

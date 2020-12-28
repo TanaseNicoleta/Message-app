@@ -1,5 +1,8 @@
 package com.example.messageapp.database.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -15,7 +18,7 @@ import static androidx.room.ForeignKey.CASCADE;
         parentColumns = "id",
         childColumns = "contactId",
         onDelete = CASCADE, onUpdate = CASCADE))
-public class Credit implements Serializable {
+public class Credit implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -44,6 +47,28 @@ public class Credit implements Serializable {
         this.durataAni = durataAni;
         this.contactId=contactId;
     }
+    @Ignore
+    protected Credit(Parcel in) {
+        id = in.readLong();
+        denumireCredit = in.readString();
+        sumaImprumutata = in.readFloat();
+        dobanda = in.readFloat();
+        durataAni = in.readInt();
+        contactId = in.readLong();
+    }
+
+    @Ignore
+    public static final Creator<Credit> CREATOR = new Creator<Credit>() {
+        @Override
+        public Credit createFromParcel(Parcel in) {
+            return new Credit(in);
+        }
+
+        @Override
+        public Credit[] newArray(int size) {
+            return new Credit[size];
+        }
+    };
 
     public long getContactId() {
         return contactId;
@@ -109,5 +134,22 @@ public class Credit implements Serializable {
                 ", dobanda=" + dobanda +
                 ", durataAni=" + durataAni +
                 '}';
+    }
+
+    @Ignore
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Ignore
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(denumireCredit);
+        dest.writeFloat(sumaImprumutata);
+        dest.writeFloat(dobanda);
+        dest.writeInt(durataAni);
+        dest.writeLong(contactId);
     }
 }

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ligthBlue"
+    android:layout_margin="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <EditText
+        android:id="@+id/lv_credit_denumire_credit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_format_align_justify_24"
+        android:drawableLeft="@drawable/ic_baseline_format_align_justify_24"
+        android:drawablePadding="4dp"
+        android:layout_marginTop="4dp"
+        android:hint="@string/denumire_credit"
+        android:inputType="text"
+        android:padding="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/lv_credit_suma_imprumutata"
+        style="@style/Lv_credit_text_style" />
+
+    <EditText
+        android:id="@+id/lv_credit_suma_imprumutata"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_attach_money_24"
+        android:drawableLeft="@drawable/ic_baseline_attach_money_24"
+        android:drawablePadding="4dp"
+        android:hint="@string/suma_imprumutata"
+        android:inputType="number"
+        android:padding="4dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lv_credit_denumire_credit"
+        style="@style/Lv_credit_text_style"/>
+
+    <EditText
+        android:id="@+id/lv_credit_dobanda"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_monetization_on_24"
+        android:drawableLeft="@drawable/ic_baseline_monetization_on_24"
+        android:drawablePadding="4dp"
+        android:hint="@string/dobanda"
+        android:inputType="number"
+        android:padding="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lv_credit_denumire_credit"
+        app:layout_constraintEnd_toStartOf="@id/lv_credit_durata_ani"
+        style="@style/Lv_credit_text_style"
+       />
+
+    <EditText
+        android:id="@+id/lv_credit_durata_ani"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_access_time_24"
+        android:drawableLeft="@drawable/ic_baseline_access_time_24"
+        android:drawablePadding="4dp"
+        android:hint="@string/durata_ani"
+        android:inputType="number"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lv_credit_suma_imprumutata"
+        app:layout_constraintStart_toEndOf="@id/lv_credit_dobanda"
+        style="@style/Lv_credit_text_style" />
+
+    <TextView
+        android:id="@+id/lv_credit_tv_edit"
+        style="@style/Lv_credit_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/click_and_edit"
+        app:layout_constraintEnd_toStartOf="@id/lv_credit_iv_edit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lv_credit_dobanda" />
+
+    <ImageView
+        android:id="@+id/lv_credit_iv_edit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_edit"
+        android:layout_margin="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lv_credit_tv_edit"
+        app:layout_constraintTop_toBottomOf="@id/lv_credit_durata_ani"/>
+
+    <TextView
+        android:id="@+id/lv_credit_tv_delete"
+        style="@style/Lv_credit_text_style"
+        android:layout_width="84dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/long_click_end_delete"
+        app:layout_constraintEnd_toStartOf="@id/lv_credit_iv_delete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lv_credit_tv_edit" />
+
+    <ImageView
+        android:id="@+id/lv_credit_iv_delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lv_credit_tv_delete"
+        app:layout_constraintTop_toBottomOf="@id/lv_credit_iv_edit" />
+</androidx.constraintlayout.widget.ConstraintLayout>

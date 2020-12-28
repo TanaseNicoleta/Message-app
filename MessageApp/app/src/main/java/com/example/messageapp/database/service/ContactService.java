@@ -11,6 +11,8 @@ import com.example.messageapp.database.model.Contact;
 import com.example.messageapp.database.model.ContactWithCredits;
 import com.example.messageapp.database.model.Credit;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -50,6 +52,26 @@ public class ContactService {
             @Override
             public List<Contact> call() {
                 return contactDao.getAllContacts();
+            }
+        };
+        taskRunner.executeAsync(callable, callback);
+    }
+
+    public void getSarbatoriti(Callback<List<Contact>> callback) {
+        Callable<List<Contact>> callable = new Callable<List<Contact>>() {
+            @Override
+            public List<Contact> call() {
+                return contactDao.getSarbatoriti();
+            }
+        };
+        taskRunner.executeAsync(callable, callback);
+    }
+
+    public void getContacteImprumutateCuPeste6000lei(Callback<List<Contact>> callback) {
+        Callable<List<Contact>> callable = new Callable<List<Contact>>() {
+            @Override
+            public List<Contact> call() {
+                return contactDao.getContacteImprumutateCuPeste6000lei();
             }
         };
         taskRunner.executeAsync(callable, callback);
