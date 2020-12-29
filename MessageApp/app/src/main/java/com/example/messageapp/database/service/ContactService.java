@@ -76,6 +76,24 @@ public class ContactService {
         };
         taskRunner.executeAsync(callable, callback);
     }
+    public void getContacteImprumutateMaiPutinDe3000lei(Callback<List<Contact>> callback) {
+        Callable<List<Contact>> callable = new Callable<List<Contact>>() {
+            @Override
+            public List<Contact> call() {
+                return contactDao.getContacteImprumutateMaiPutinDe3000lei();
+            }
+        };
+        taskRunner.executeAsync(callable, callback);
+    }
+    public void getContacteImprumutateCuSumaTotalaIntre3000si6000(Callback<List<Contact>> callback) {
+        Callable<List<Contact>> callable = new Callable<List<Contact>>() {
+            @Override
+            public List<Contact> call() {
+                return contactDao.getContacteImprumutateCuSumaTotalaIntre3000si6000();
+            }
+        };
+        taskRunner.executeAsync(callable, callback);
+    }
 
     public void getInfoAboutOneContact(Callback<Contact> callback, final Contact contact){
         Callable<Contact> callable = new Callable<Contact>() {

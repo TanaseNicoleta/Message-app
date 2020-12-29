@@ -97,5 +97,12 @@
     <string name="err_email">Completati cu un email valid</string>
     <string name="err_parola">Parola trebuie sa contina cel putin 8 caractere</string>
     <string name="auth_failed">Nu v-ati putut autentifica.</string>
+    <string name="sarbatoriti">Sarbatoriti</string>
+    <string name="indatorati">Indatorati</string>
+    <string name="label_peste_6000">Peste 6000</string>
+    <string name="label_sub">Sub 3000</string>
+    <string name="label_between">Intre 3000 si 6000</string>
+    <string name="title_pie">Distributia creditelor</string>
+    <string name="radar_chart_title">Diagrama radar pentru suma conturilor sarbatoritilor</string>
 
 </resources>

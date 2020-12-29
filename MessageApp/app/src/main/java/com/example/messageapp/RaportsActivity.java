@@ -3,12 +3,18 @@ package com.example.messageapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 
@@ -18,8 +24,10 @@ import com.example.messageapp.database.model.Contact;
 import com.example.messageapp.database.model.Credit;
 import com.example.messageapp.database.service.ContactService;
 import com.example.messageapp.database.service.CreditService;
+import com.example.messageapp.fragments.AnimationFragment;
 import com.example.messageapp.fragments.ClientsFragment;
 import com.example.messageapp.fragments.SarbatoritiFragment;
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -35,10 +43,9 @@ public class RaportsActivity extends AppCompatActivity {
     private ContactService contactService;
     private CreditService creditService;
     private Map<String,Integer>mapaCredite;
-
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private Button btnSarbatoriti;
+    private Button btnIndatorati;
+    Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,34 +58,48 @@ public class RaportsActivity extends AppCompatActivity {
         creditService.getAllCredits(getAllCreditsFromDbCallback());
         mapaCredite=getMapaCredite(credits);
         initComponents();
+        openDefaultFragment(savedInstanceState);
     }
 
     private void initComponents(){
-        toolbar=findViewById(R.id.toolbar);
-        tabLayout=findViewById(R.id.tabs);
-        viewPager=findViewById(R.id.raports_view_pager);
-        setSupportActionBar(toolbar);
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
-    }
-    private void setupViewPager(ViewPager viewPager){
-        ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(SarbatoritiFragment.newInstance((ArrayList<Contact>) contacts), getString(R.string.tab_title_sarbatoriti));
-        viewPagerAdapter.addFragment(ClientsFragment.newInstance((ArrayList<Contact>) contacteCuCredite), getString(R.string.tab_title_indatorati));
-        viewPager.setAdapter(viewPagerAdapter);
+     btnSarbatoriti=findViewById(R.id.btn_raports_sarbatoriti);
+     btnIndatorati=findViewById(R.id.btn_raports_indatorati);
+     btnSarbatoriti.setOnClickListener(openSarbatoritiFragment());
+     btnIndatorati.setOnClickListener(openClientsFragment());
     }
 
-//    private Callback<Map<String,Integer>> getCreditsAndNumberofThem() {
-//        return new Callback<Map<String,Integer>>() {
-//            @Override
-//            public void runResultOnUiThread(Map<String,Integer> result) {
-//                if (result != null) {
-//                    credits.putAll(result);
-//                    Log.i("HASHMAP", credits.toString());
-//                }
-//            }
-//        };
-//    }
+    private View.OnClickListener openClientsFragment() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentFragment = ClientsFragment.newInstance((ArrayList<Contact>) contacteCuCredite);
+                openFragment();
+            }
+        };
+    }
+
+    private View.OnClickListener openSarbatoritiFragment() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentFragment = SarbatoritiFragment.newInstance((ArrayList<Contact>) contacts);
+                openFragment();
+            }
+        };
+    }
+
+    private void openFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame_container, currentFragment)
+                .commit();
+    }
+    private void openDefaultFragment(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            currentFragment =new AnimationFragment();
+            openFragment();
+        }
+    }
 
     private Callback<List<Contact>> getSarbatoritiFromDbCallback() {
         return new Callback<List<Contact>>() {

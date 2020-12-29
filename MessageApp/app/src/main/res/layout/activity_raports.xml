@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/raports_app_bar"
-        android:background="@color/colorAccent"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/raport_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/colorAccent">
         </androidx.appcompat.widget.Toolbar>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMaxWidth="0dp"
-            app:tabGravity="fill"
-            app:tabTextColor="@color/whitecolor"
-            app:tabMode="fixed">
+    <Button
+        android:id="@+id/btn_raports_sarbatoriti"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Lv_credit_text_style"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@id/btn_raports_indatorati"
+        app:layout_constraintTop_toBottomOf="@id/raport_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20sp"
+        android:text="@string/sarbatoriti" android:background="@color/colorAccent"/>
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/sarbatoriti"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_title_sarbatoriti" />
+    <Button
+        android:id="@+id/btn_raports_indatorati"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_raports_sarbatoriti"
+        app:layout_constraintTop_toBottomOf="@id/raport_toolbar"
+        android:text="@string/indatorati"
+        style="@style/Lv_credit_text_style"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:background="@color/colorAccent">
+    </Button>
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/credite_peste_6000"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_title_indatorati" />
-
-
-        </com.google.android.material.tabs.TabLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/raports_view_pager"
+    <FrameLayout
+        android:id="@+id/main_frame_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="55dp"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-    </androidx.viewpager.widget.ViewPager>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/btn_raports_sarbatoriti"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
