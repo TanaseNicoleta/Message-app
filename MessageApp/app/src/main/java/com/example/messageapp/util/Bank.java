@@ -40,10 +40,8 @@ public class Bank implements Serializable {
 
     @Override
     public String toString() {
-        return "Bank{" +
-                "denumireBanca='" + denumireBanca + '\'' +
-                ", adresa='" + adresa + '\'' +
-                ", comision=" + comision +
-                '}';
+        return   denumireBanca + "," +
+                 adresa + "," +
+                 comision;
     }
 }
