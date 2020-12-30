@@ -12,9 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/clientii_care_au_credite_de_peste_6000_lei"
         android:textAllCaps="true"
-        android:textColor="@color/startColor2"
+        android:textColor="@color/whitecolor"
         android:textSize="15dp"
         android:textAlignment="center"
         android:textStyle="bold"
@@ -24,14 +25,14 @@
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center_horizontal" />
 
-        <ListView
-            android:id="@+id/lv_raports_indatorati"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:layout_constraintBottom_toTopOf="@id/iv_piechart"
-            app:layout_constraintTop_toBottomOf="@id/raports_tv_title">
-        </ListView>
+    <ListView
+        android:id="@+id/lv_raports_indatorati"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@id/iv_piechart"
+        app:layout_constraintTop_toBottomOf="@id/raports_tv_title">
+    </ListView>
 
     <ImageView
         android:id="@+id/iv_piechart"
@@ -39,8 +40,8 @@
         android:layout_height="50dp"
         android:clickable="true"
         android:src="@drawable/ic_pie"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="8dp"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.messageapp.database.model.Contact;
 import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
@@ -44,16 +45,23 @@ public class RadarChartActivity extends AppCompatActivity {
             i++;
         }
         RadarDataSet radarDataSet=new RadarDataSet(radarEntries, getString(R.string.radar_chart_title));
-        radarDataSet.setColor(Color.RED);
+
+        radarDataSet.setColor(Color.MAGENTA);
         radarDataSet.setLineWidth(2f);
-        radarDataSet.setValueTextColor(Color.RED);
-        radarDataSet.setValueTextSize(14f);
+        radarDataSet.setValueTextColor(Color.MAGENTA);
+        radarDataSet.setValueTextSize(17f);
 
         RadarData radarData=new RadarData();
         radarData.addDataSet(radarDataSet);
 
         XAxis xAxis=radarChart.getXAxis();
+        xAxis.setTextSize(15f);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+
+        YAxis yAxis = radarChart.getYAxis();
+        yAxis.setTextSize(12f);
+
+        radarChart.setExtraBottomOffset(5);
 
         radarChart.setData(radarData);
     }

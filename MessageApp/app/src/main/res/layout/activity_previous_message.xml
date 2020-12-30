@@ -4,39 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/ic_wave"
     tools:context=".PreviousMessageActivity">
 
     <TextView
-        android:id="@+id/previous_message_tv_nume"
+        android:id="@+id/previous_message_tv_receiver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
         style="@style/Lv_credit_text_style"
-        android:layout_width="233dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/round_border"
-        android:backgroundTint="@color/startColor"
-        android:gravity="center_horizontal"
-        android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    </TextView>
+    <TextView
+        android:id="@+id/previous_message_tv_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:background="@color/startColor"
+        android:textSize="15sp"
+        android:text="@string/data"
+        app:layout_constraintBottom_toTopOf="@id/tv_mesaj_anterior"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_mesaj_anterior"
-        style="@style/Lv_credit_text_style"
-        android:layout_width="346dp"
-        android:layout_height="117dp"
-        android:layout_marginTop="252dp"
-        android:background="@color/startColor"
-        android:gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/round_tv"
+        android:text="@string/mesaje"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/previous_message_tv_sender"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.372"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/previous_message_tv_sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="300dp"
+        style="@style/Lv_credit_text_style"
+        android:textStyle="italic"
+        android:text="@string/trimis"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

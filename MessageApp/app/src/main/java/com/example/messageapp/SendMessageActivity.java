@@ -1,5 +1,6 @@
 package com.example.messageapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -18,7 +19,15 @@ import android.widget.Toast;
 import com.example.messageapp.database.model.Contact;
 import com.example.messageapp.database.model.Credit;
 import com.example.messageapp.util.DateConverter;
+import com.example.messageapp.util.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
 
@@ -32,11 +41,15 @@ public class SendMessageActivity extends AppCompatActivity {
     public static final String CREDIT_EDITAT_SEND_MESSAJE = "credit editat send messaje";
     public static final String CREDIT_STERS_SEND_MESSAGE = "credit sters send message";
     public static final String SUMA_CONT_FINALA_KEY = "suma cont finala key";
+    public static final String DATA_TRIMITERII = "Data trimiterii";
+    public static final String USER_CARE_A_TRIMIS_MESAJUL = "User care a trimis mesajul";
 
     private Contact contact;
     private Credit creditEditat;
     private Credit creditSters;
     private Float sumaContFinal;
+    private String numeUser;
+    private String prenumeUser;
 
     private CardView mesajAniversar;
     private CardView updateSumaCont;
@@ -62,6 +75,7 @@ public class SendMessageActivity extends AppCompatActivity {
         creditSters= (Credit) intent.getParcelableExtra(CREDIT_STERS_SEND_MESSAGE);
         sumaContFinal=intent.getFloatExtra(SUMA_CONT_FINALA_KEY, -1);
         initComponents();
+        getUserName();
     }
 
     private  void initComponents(){
@@ -165,8 +179,14 @@ public class SendMessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(contact!=null){
-                    mesaj=getString(R.string.mesajLMA, contact.getPrenume());
-                    etMesaj.setText(mesaj);
+                    Date currentDate=new Date();
+                    String data=DateConverter.fromDate(currentDate);
+                    if(data.substring(0,5).equalsIgnoreCase(DateConverter.fromDate(contact.getDataNasterii()).substring(0,5))){
+                        mesaj=getString(R.string.mesajLMA, contact.getPrenume());
+                        etMesaj.setText(mesaj);
+                    }else{
+                        Toast.makeText(getApplicationContext(), R.string.invalid_birthdate_error,Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         };
@@ -183,7 +203,36 @@ public class SendMessageActivity extends AppCompatActivity {
     private void saveMessageOfContact(){
         SharedPreferences.Editor editor = preferencesMesajAnterior.edit();
         String mesajScris=mesaj;
+        Date date=new Date();
+        String data=DateConverter.fromDate(date);
         editor.putString(MESAJANTERIOR,mesajScris);
+        editor.putString(DATA_TRIMITERII,data);
+        if(numeUser!=null && prenumeUser !=null){
+            editor.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.numeUser, numeUser,prenumeUser));
+        }else{
+            editor.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.no_user));
+        }
         editor.apply();
+    }
+
+    private void  getUserName() {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
+        final String userId = user.getUid();
+
+        database.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User profile = snapshot.getValue(User.class);
+                if(profile != null) {
+                     numeUser=profile.getNume();
+                     prenumeUser=profile.getPrenume();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), R.string.msj_error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

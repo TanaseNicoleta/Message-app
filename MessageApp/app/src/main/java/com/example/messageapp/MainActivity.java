@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Contact> contacts=new ArrayList<>();
     private List<Credit>credits=new ArrayList<>();
     private List<Bank>bankList=new ArrayList<>();
+    private List<ContactWithCredits>contactWithCreditsList=new ArrayList<>();
 
     private AsyncTaskRunner asyncTaskRunner = new AsyncTaskRunner();
 
@@ -124,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
                     contactService.insert(insertContactIntoDbCallback(), contactWithCredits.contact);
                     Log.i("Contact simplu",contactWithCredits.contact.toString());
                 }else{
-                    contactService.insert(contactWithCredits);
+                    //contactService.insert(contactWithCredits);
+                    contactService.insert(insertContactWithCreditsIntoDbCallback(),contactWithCredits);
                     Log.i("Contact cu credite",contactWithCredits.toString());
 
                 }
@@ -200,7 +202,8 @@ public class MainActivity extends AppCompatActivity {
                         lista.add(credit);
                         ContactWithCredits contactWithCredits=new ContactWithCredits(contacts.get(i),lista);
                         i++;
-                        contactService.insert(contactWithCredits);
+                        //contactService.insert(contactWithCredits);
+                        contactService.insert(insertContactWithCreditsIntoDbCallback(),contactWithCredits);
                         Log.i("CONTACTWITHCREDITS", contactWithCredits.toString());
                     }
                 }
@@ -213,6 +216,18 @@ public class MainActivity extends AppCompatActivity {
             public void runResultOnUiThread(Contact result) {
                 if (result != null) {
                     contactsAux.add(result);
+                }
+            }
+        };
+    }
+
+    //noua varianta
+    private Callback<ContactWithCredits> insertContactWithCreditsIntoDbCallback() {
+        return new Callback<ContactWithCredits>() {
+            @Override
+            public void runResultOnUiThread(ContactWithCredits result) {
+                if (result != null) {
+                    contactWithCreditsList.add(result);
                 }
             }
         };

@@ -28,24 +28,46 @@ public class ContactService {
 
 
     //SPER SA MEARGA MIZERIA ASTA
-    public void insert(final ContactWithCredits contactWithCredits){
-        new insertAsync(contactDao).execute(contactWithCredits);
-    }
-    private static class insertAsync extends AsyncTask<ContactWithCredits, Void, Void> {
-        private ContactDao contactDaoAsync;
-        insertAsync(ContactDao contactDao) {
-            contactDaoAsync = contactDao;
-        }
-        @Override
-        protected Void doInBackground(ContactWithCredits... contactWithCredits) {
-            long identifier = contactDaoAsync.insert(contactWithCredits[0].contact);
-            for (Credit credit : contactWithCredits[0].credits) {
-                credit.setContactId(identifier);
+//    public void insert(final ContactWithCredits contactWithCredits){
+//        new insertAsync(contactDao).execute(contactWithCredits);
+//    }
+//    private static class insertAsync extends AsyncTask<ContactWithCredits, Void, Void> {
+//        private ContactDao contactDaoAsync;
+//        insertAsync(ContactDao contactDao) {
+//            contactDaoAsync = contactDao;
+//        }
+//        @Override
+//        protected Void doInBackground(ContactWithCredits... contactWithCredits) {
+//            long idContact = contactDaoAsync.insert(contactWithCredits[0].contact);
+//            for (Credit credit : contactWithCredits[0].credits) {
+//                credit.setContactId(idContact);
+//            }
+//            contactDaoAsync.insertCredits(contactWithCredits[0].credits);
+//            return null;
+//        }
+//    }
+
+    public void insert (Callback<ContactWithCredits>callback, final ContactWithCredits contactWithCredits){
+        Callable<ContactWithCredits> callable = new Callable<ContactWithCredits>() {
+            @Override
+            public ContactWithCredits call() {
+                if(contactWithCredits==null){
+                    return null;
+                }
+                long idContact=contactDao.insert(contactWithCredits.contact);
+                if(idContact==-1){
+                    return null;
+                }
+                for (Credit credit : contactWithCredits.credits) {
+                  credit.setContactId(idContact);
+                }
+                contactDao.insertCredits(contactWithCredits.credits);
+                return contactWithCredits;
             }
-            contactDaoAsync.insertCredits(contactWithCredits[0].credits);
-            return null;
-        }
+        };
+        taskRunner.executeAsync(callable, callback);
     }
+
 
     public void getAllContacts(Callback<List<Contact>> callback) {
         Callable<List<Contact>> callable = new Callable<List<Contact>>() {

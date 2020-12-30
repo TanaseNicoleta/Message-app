@@ -70,6 +70,9 @@
     <string name="mesajUpdateDobanda">Draga %1$s, dobanda la creditul tau %2$s s-a modificat la %3$6.2f procente.</string>
     <string name="mesajTerminareCredit">Draga %1$s, creditul tau %2$s in valoare de %3$6.2f a fost achitat. </string>
 
+    <string name="numeUser">%1$s %2$s</string>
+    <string name="numeUserCareATrimisMesajul">Trimis de: %1$s</string>
+
     <string name="credit_needitat_error">Nu ati editat dobanda creditului</string>
     <string name="credit_nesters_error">Nu ati sters niciun credit</string>
     <string name="suma_cont_needitata_error">Nu ati editat suma cont</string>
@@ -84,7 +87,7 @@
     <string name="click_and_see_more">Apasa aici ca sa vezi mai mult</string>
     <string name="long_click">Apasa lung</string>
     <string name="click">Apasa</string>
-    <string name="nume_contact_ultimul_mesaj">Ultimul mesaj trimis contactului %1$s %2$s</string>
+    <string name="nume_contact_ultimul_mesaj">%1$s %2$s</string>
     <string name="forgot_password">Mi-am uitat parola</string>
     <string name="reset_password">Resetare parola</string>
     <string name="email_err">Completati cu un email valid</string>
@@ -104,5 +107,10 @@
     <string name="label_between">Intre 3000 si 6000</string>
     <string name="title_pie">Distributia creditelor</string>
     <string name="radar_chart_title">Diagrama radar pentru suma conturilor sarbatoritilor</string>
+    <string name="mesajele_trimise">Mesajele trimise</string>
+    <string name="no_user">-</string>
+    <string name="data">Data</string>
+    <string name="trimis">Trimis</string>
+    <string name="invalid_birthdate_error">Nu este ziua contactului</string>
 
 </resources>

@@ -1,165 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <View
-        android:id="@+id/top_view_edit_contact_dialog"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@color/startColor2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/bottom_view_edit_contact_dialog"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:background="@drawable/ic_wave"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_view_edit_contact_dialog"/>
-
-    <ImageView
-        android:id="@+id/imageView_avatar_edit_contact_dialog"
-        android:layout_width="100dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_baseline_person_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/input_nume_edit_contact_dialog"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="32dp"
-        android:drawableStart="@drawable/ic_baseline_format_align_justify_24"
-        android:drawableLeft="@drawable/ic_baseline_format_align_justify_24"
-        android:hint="@string/nume"
-        android:inputType="text"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_avatar_edit_contact_dialog" />
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+            <View
+                android:id="@+id/top_view_edit_contact_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/startColor2" />
 
-    <EditText
-        android:id="@+id/input_prenume_edit_contact_dialog"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
-        android:drawableStart="@drawable/ic_baseline_format_align_justify_24"
-        android:drawableLeft="@drawable/ic_baseline_format_align_justify_24"
-        android:hint="@string/prenume"
-        android:inputType="text"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_nume_edit_contact_dialog" />
+            <View
+                android:id="@+id/bottom_view_edit_contact_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_wave" />
 
-    <EditText
-        android:id="@+id/input_telefon_edit_contact_dialog"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
-        android:drawableStart="@drawable/ic_baseline_local_phone_24"
-        android:drawableLeft="@drawable/ic_baseline_local_phone_24"
-        android:hint="@string/telefon"
-        android:inputType="number"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_prenume_edit_contact_dialog" />
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView_avatar_edit_contact_dialog"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="56dp"-->
+<!--            android:layout_gravity="right"-->
+<!--            android:src="@drawable/ic_baseline_person_24" />-->
 
-    <EditText
-        android:id="@+id/input_data_nasterii_edit_contact_dialog"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
-        android:drawableStart="@drawable/ic_baseline_cake_24"
-        android:drawableLeft="@drawable/ic_baseline_cake_24"
-        android:hint="@string/data_nasterii_dd_mm_yyyy"
-        android:inputType="text"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_telefon_edit_contact_dialog" />
+        <EditText
+                android:id="@+id/input_nume_edit_contact_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="32dp"
+                android:drawableStart="@drawable/ic_baseline_format_align_justify_24"
+                android:drawableLeft="@drawable/ic_baseline_format_align_justify_24"
+                android:hint="@string/nume"
+                android:inputType="text"
+                android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/input_suma_cont_edit_contact_dialog"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
-        android:drawableStart="@drawable/ic_baseline_attach_money_24"
-        android:drawableLeft="@drawable/ic_baseline_attach_money_24"
-        android:hint="@string/suma_cont"
-        android:inputType="numberDecimal"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_data_nasterii_edit_contact_dialog" />
+            <EditText
+                android:id="@+id/input_prenume_edit_contact_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
+                android:drawableStart="@drawable/ic_baseline_format_align_justify_24"
+                android:drawableLeft="@drawable/ic_baseline_format_align_justify_24"
+                android:hint="@string/prenume"
+                android:inputType="text"
+                android:padding="8dp"/>
 
-    <RadioGroup
-        android:id="@+id/rg_adauga_gen_edit_contact_dialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="8dp"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_suma_cont_edit_contact_dialog">
+            <EditText
+                android:id="@+id/input_telefon_edit_contact_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
+                android:drawableStart="@drawable/ic_baseline_local_phone_24"
+                android:drawableLeft="@drawable/ic_baseline_local_phone_24"
+                android:hint="@string/telefon"
+                android:inputType="number"
+                android:padding="8dp"/>
 
-        <RadioButton
-            android:id="@+id/rb_adauga_gen_feminin_edit_contact_dialog"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="8dp"
-            android:button="@android:color/transparent"
-            android:background="@drawable/radio_button_selector"
-            android:textColor="@drawable/radio_button_text_color"
-            android:elevation="4dp"
-            android:textAlignment="center"
-            android:layout_marginRight="8dp"
-            android:text="@string/gen_feminin"
-            android:gravity="center_horizontal" />
-        <RadioButton
-            android:id="@+id/rb_adauga_gen_masculin_edit_contact_dialog"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="8dp"
-            android:button="@android:color/transparent"
-            android:background="@drawable/radio_button_selector"
-            android:textColor="@drawable/radio_button_text_color"
-            android:elevation="4dp"
-            android:layout_marginLeft="8dp"
-            android:textAlignment="center"
-            android:text="@string/gen_masculin"
-            android:gravity="center_horizontal" />
-    </RadioGroup>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/input_data_nasterii_edit_contact_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
+                android:drawableStart="@drawable/ic_baseline_cake_24"
+                android:drawableLeft="@drawable/ic_baseline_cake_24"
+                android:hint="@string/data_nasterii_dd_mm_yyyy"
+                android:inputType="text"
+                android:padding="8dp"/>
+            <EditText
+                android:id="@+id/input_suma_cont_edit_contact_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
+                android:drawableStart="@drawable/ic_baseline_attach_money_24"
+                android:drawableLeft="@drawable/ic_baseline_attach_money_24"
+                android:hint="@string/suma_cont"
+                android:inputType="numberDecimal"
+                android:padding="8dp"/>
+
+            <RadioGroup
+                android:id="@+id/rg_adauga_gen_edit_contact_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="8dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RadioButton
+                    android:id="@+id/rb_adauga_gen_feminin_edit_contact_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:button="@android:color/transparent"
+                    android:background="@drawable/radio_button_selector"
+                    android:textColor="@drawable/radio_button_text_color"
+                    android:elevation="4dp"
+                    android:textAlignment="center"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/gen_feminin"
+                    android:gravity="center_horizontal" />
+                <RadioButton
+                    android:id="@+id/rb_adauga_gen_masculin_edit_contact_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:button="@android:color/transparent"
+                    android:background="@drawable/radio_button_selector"
+                    android:textColor="@drawable/radio_button_text_color"
+                    android:elevation="4dp"
+                    android:layout_marginLeft="8dp"
+                    android:textAlignment="center"
+                    android:text="@string/gen_masculin"
+                    android:gravity="center_horizontal" />
+            </RadioGroup>
+    </LinearLayout>
+</ScrollView>

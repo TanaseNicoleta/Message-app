@@ -11,8 +11,10 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -62,10 +64,33 @@ public class RaportsActivity extends AppCompatActivity {
     }
 
     private void initComponents(){
-     btnSarbatoriti=findViewById(R.id.btn_raports_sarbatoriti);
-     btnIndatorati=findViewById(R.id.btn_raports_indatorati);
-     btnSarbatoriti.setOnClickListener(openSarbatoritiFragment());
-     btnIndatorati.setOnClickListener(openClientsFragment());
+        btnSarbatoriti=findViewById(R.id.btn_raports_sarbatoriti);
+        btnIndatorati=findViewById(R.id.btn_raports_indatorati);
+        btnSarbatoriti.setOnClickListener(openSarbatoritiFragment());
+        btnIndatorati.setOnClickListener(openClientsFragment());
+
+        btnSarbatoriti.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    btnSarbatoriti.setBackgroundColor(getResources().getColor(R.color.startColor2));
+                    btnIndatorati.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                }
+                return false;
+            }
+        });
+
+        btnIndatorati.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    btnSarbatoriti.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    btnIndatorati.setBackgroundColor(getResources().getColor(R.color.startColor2));
+                }
+                return false;
+            }
+        });
+
     }
 
     private View.OnClickListener openClientsFragment() {

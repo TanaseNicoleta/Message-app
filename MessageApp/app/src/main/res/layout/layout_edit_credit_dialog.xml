@@ -1,75 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <EditText
-        android:id="@+id/input_denumire_credit_edit_credit"
-        android:layout_width="0dp"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:drawableStart="@drawable/ic_baseline_format_align_justify_24"
-        android:drawableLeft="@drawable/ic_baseline_format_align_justify_24"
-        android:hint="@string/denumire_credit"
-        android:inputType="text"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+            <EditText
+                android:id="@+id/input_denumire_credit_edit_credit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:drawableStart="@drawable/ic_baseline_format_align_justify_24"
+                android:drawableLeft="@drawable/ic_baseline_format_align_justify_24"
+                android:hint="@string/denumire_credit"
+                android:inputType="text"
+                android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/input_suma_imprumutata_edit_credit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:drawableStart="@drawable/ic_baseline_attach_money_24"
-        android:drawableLeft="@drawable/ic_baseline_attach_money_24"
-        android:hint="@string/suma_imprumutata"
-        android:inputType="numberDecimal"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_denumire_credit_edit_credit" />
+            <EditText
+                android:id="@+id/input_suma_imprumutata_edit_credit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:drawableStart="@drawable/ic_baseline_attach_money_24"
+                android:drawableLeft="@drawable/ic_baseline_attach_money_24"
+                android:hint="@string/suma_imprumutata"
+                android:inputType="numberDecimal"
+                android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/input_dobanda_edit_credit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:drawableStart="@drawable/ic_baseline_monetization_on_24"
-        android:drawableLeft="@drawable/ic_baseline_monetization_on_24"
-        android:hint="@string/dobanda"
-        android:inputType="numberDecimal"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_suma_imprumutata_edit_credit" />
+            <EditText
+                android:id="@+id/input_dobanda_edit_credit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:drawableStart="@drawable/ic_baseline_monetization_on_24"
+                android:drawableLeft="@drawable/ic_baseline_monetization_on_24"
+                android:hint="@string/dobanda"
+                android:inputType="numberDecimal"
+                android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/input_durata_ani_edit_credit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:drawableStart="@drawable/ic_baseline_access_time_24"
-        android:drawableLeft="@drawable/ic_baseline_access_time_24"
-        android:hint="@string/durata_ani"
-        android:inputType="numberDecimal"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_dobanda_edit_credit" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/input_durata_ani_edit_credit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:drawableStart="@drawable/ic_baseline_access_time_24"
+                android:drawableLeft="@drawable/ic_baseline_access_time_24"
+                android:hint="@string/durata_ani"
+                android:inputType="numberDecimal"
+                android:padding="8dp" />
+    </LinearLayout>
+</ScrollView>
