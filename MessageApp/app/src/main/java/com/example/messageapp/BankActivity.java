@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,13 +40,11 @@ public class BankActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //bankList= (List<Bank>) intent.getSerializableExtra(BANK_LIST);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank);
         intent=getIntent();
+        populateBankListFromPref();
         initComponents();
-        //saveToPref(bankList);
-        populateBankList();
     }
 
     private void initComponents() {
@@ -52,14 +52,10 @@ public class BankActivity extends AppCompatActivity {
         bottomNavigationView=findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_view_detalii_banca);
         bottomNavigationView.setOnNavigationItemSelectedListener(addBottomNavView());
-        addLvBank();
-        lvBank.setOnItemClickListener(openEditBankDialog());
-
-    }
-
-    private void addLvBank() {
         BankAdapter adapter = new BankAdapter(getApplicationContext(), R.layout.lv_bank, bankList, getLayoutInflater());
         lvBank.setAdapter(adapter);
+        lvBank.setOnItemClickListener(openEditBankDialog());
+
     }
 
     private void notifyAdapter() {
@@ -74,11 +70,10 @@ public class BankActivity extends AppCompatActivity {
                 Bank clickedBanca = (Bank) adapterView.getItemAtPosition(i);
                 EditBankDialog editBankDialog = new EditBankDialog();
                 editBankDialog.show(getSupportFragmentManager(), getString(R.string.dialog_edit_commission));
-
-                SharedPreferences preferences = getSharedPreferences(UPDATED_BANKS, MODE_PRIVATE);
+                preferences = getSharedPreferences(UPDATED_BANKS, MODE_PRIVATE);
                 SharedPreferences.Editor e = preferences.edit();
                 e.clear();
-                e.putString(getString(R.string.banca) + i, clickedBanca.toString());
+                e.putString(String.valueOf(i), clickedBanca.toString());
                 e.commit();
 
             }
@@ -87,15 +82,21 @@ public class BankActivity extends AppCompatActivity {
 
     }
 
-    private void populateBankList() {
+    private void populateBankListFromPref() {
         preferences = getSharedPreferences(BANK_PREF, Context.MODE_PRIVATE);
         Map<String, ?> entries = preferences.getAll();
-        for (Map.Entry<String, ?> entry : entries.entrySet()) {
-            String dateBanca = entry.getValue().toString();
-            String[] datas = dateBanca.split(",");
+        if(entries.isEmpty()) {
+            bankList= (List<Bank>) intent.getSerializableExtra(BANK_LIST);
+            saveToPref(bankList);
+        }
+        else {
+            for (Map.Entry<String, ?> entry : entries.entrySet()) {
+                String dateBanca = entry.getValue().toString();
+                String[] datas = dateBanca.split(",");
 
-            Bank bank = new Bank(datas[0], datas[1], Float.parseFloat(datas[2]));
-            bankList.add(bank);
+                Bank bank = new Bank(datas[0], datas[1], Float.parseFloat(datas[2]));
+                bankList.add(bank);
+            }
         }
     }
 
@@ -105,7 +106,7 @@ public class BankActivity extends AppCompatActivity {
         Iterator<Bank> i = bankList.iterator();
         int nr = 0;
         while(i.hasNext()) {
-            e.putString(getString(R.string.banca) + nr, i.next().toString());
+            e.putString(String.valueOf(nr), i.next().toString());
             e.commit();
             nr++;
         }
@@ -139,4 +140,6 @@ public class BankActivity extends AppCompatActivity {
             }
         };
     }
+
+
 }

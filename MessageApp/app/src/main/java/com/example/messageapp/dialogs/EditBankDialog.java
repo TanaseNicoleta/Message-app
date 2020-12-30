@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -31,7 +32,8 @@ public class EditBankDialog extends AppCompatDialogFragment {
     public static final String COMISION = "Comision";
     private EditText etComision;
     private TextView tvAdresa, tvDenumire;
-
+    Float oldCom = null;
+    String denumire, adresa;
     private SharedPreferences preferences, clickedPref;
 
 
@@ -41,7 +43,6 @@ public class EditBankDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_edit_bank_commission_dialog, null);
-
         initComponents(view);
         preferences = this.getActivity().getSharedPreferences(BANK_PREF, Context.MODE_PRIVATE);
         clickedPref = this.getActivity().getSharedPreferences(UPDATED_BANKS, Context.MODE_PRIVATE);
@@ -50,10 +51,13 @@ public class EditBankDialog extends AppCompatDialogFragment {
         for (Map.Entry<String, ?> entry : entries.entrySet()) {
             String dateBanca = entry.getValue().toString();
             String[] datas = dateBanca.split(",");
+            denumire=datas[0].trim();
+            adresa=datas[1].trim();
+            oldCom = Float.parseFloat(datas[2]);
 
-           tvDenumire.setText(datas[0]);
-           tvAdresa.setText(datas[1]);
-           etComision.setText(datas[2]);
+            tvDenumire.setText(datas[0]);
+            tvAdresa.setText(datas[1]);
+            etComision.setText(datas[2]);
 
         }
 
@@ -68,8 +72,7 @@ public class EditBankDialog extends AppCompatDialogFragment {
         .setPositiveButton(R.string.salveaza, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                float comision = Float.parseFloat(etComision.getText().toString());
-                modificaComision(comision);
+                modificaComision(Float.parseFloat(etComision.getText().toString().trim()),denumire);
                 getActivity().finish();
                 Intent intent = new Intent(getContext(), BankActivity.class);
                 startActivity(intent);
@@ -85,31 +88,32 @@ public class EditBankDialog extends AppCompatDialogFragment {
         tvAdresa = view.findViewById(R.id.tv_bank_adress);
     }
 
-    private void modificaComision(Float com) {
-        preferences = this.getActivity().getSharedPreferences(BANK_PREF, Context.MODE_PRIVATE);
-        clickedPref = this.getActivity().getSharedPreferences(UPDATED_BANKS, Context.MODE_PRIVATE);
+    private void modificaComision(Float com, String denumire) {
+        Map<String, ?> bankEntries = preferences.getAll();
         SharedPreferences.Editor editor = preferences.edit();
 
-        Map<String, ?> allEntries = clickedPref.getAll();
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            String dateBanca = entry.getValue().toString();
+        for (Map.Entry<String, ?> bankEntry : bankEntries.entrySet()) {
+            String dateBanca = bankEntry.getValue().toString();
             String[] datas = dateBanca.split(",");
-            datas[2] = com.toString();
+            if (datas[0].equals(denumire)) {
+                datas[2] = String.valueOf(com);
 
-            StringBuilder builder = new StringBuilder();
-            for(String s : datas) {
-                builder.append(s);
-                builder.append(",");
+                StringBuilder sb = new StringBuilder();
+                for (String data : datas) {
+                    sb.append(data);
+                    sb.append(",");
+                }
+                String str = sb.toString();
+                str = str.substring(0, str.length() - 1);
+                editor.putString(bankEntry.getKey(), str);
+                editor.commit();
+
             }
-            String s = builder.toString();
-
-            editor.putString(entry.getKey(), s);
-            editor.commit();
 
         }
 
 
     }
 
-
 }
+

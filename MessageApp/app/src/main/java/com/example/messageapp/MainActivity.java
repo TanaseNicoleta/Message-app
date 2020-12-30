@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String BANK_LIST = "Bank list";
     public static final int ADD_CONTACT_REQUEST_CODE = 200;
-    private final String URL="https://jsonkeeper.com/b/PLL6";
+    private final String URL="https://jsonkeeper.com/b/Q560";
     private BottomNavigationView bottomNavigationView;
     private List<Contact> contacts=new ArrayList<>();
     private List<Credit>credits=new ArrayList<>();
