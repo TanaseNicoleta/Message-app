@@ -70,6 +70,7 @@
     <string name="mesajUpdateDobanda">Draga %1$s, dobanda la creditul tau %2$s s-a modificat la %3$6.2f procente.</string>
     <string name="mesajTerminareCredit">Draga %1$s, creditul tau %2$s in valoare de %3$6.2f a fost achitat. </string>
 
+    <string name="toastTrimitereSMS">SMS trimis contactului %1$s</string>
     <string name="numeUser">%1$s %2$s</string>
     <string name="numeUserCareATrimisMesajul">Trimis de: %1$s</string>
 
@@ -112,5 +113,9 @@
     <string name="data">Data</string>
     <string name="trimis">Trimis</string>
     <string name="invalid_birthdate_error">Nu este ziua contactului</string>
+    <string name="tine_ma_minte">Tine-ma minte!</string>
+    <string name="faild_send_message">Failed to send message</string>
+    <string name="informare_trimitere_mesaje">Toti sarbatoritii au primit mesaj</string>
+    <string name="intrebare">Cui vrei sa i trimiti?</string>
 
 </resources>

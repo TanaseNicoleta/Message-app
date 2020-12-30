@@ -64,4 +64,17 @@
         android:textColor="@color/startColor"
         />
 
+    <Switch
+        android:id="@+id/switch_remember_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="196dp"
+        android:text="@string/tine_ma_minte"
+        android:textSize="18dp"
+        android:textColor="@color/startColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.611"
+        app:layout_constraintStart_toEndOf="@id/tv_forgot_password" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

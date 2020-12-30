@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +22,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LogInActivity extends AppCompatActivity {
+    public static final String SHARED_PREF_USER = "userSharedPred";
+    public static final String SALVAT = "salvat";
+    public static final String EMAIL = "email";
+    public static final String PAROLA = "parola";
 
     private EditText etEmail, etParola;
     private TextView tvForgotPass;
     private Button btnLogIn;
     private FirebaseAuth mAuth;
+    private Switch switchBtn;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,7 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(validate()) {
+                    saveUserToSharePref();
                     String email = etEmail.getText().toString().trim();
                     String parola = etParola.getText().toString().trim();
                     mAuth.signInWithEmailAndPassword(email, parola)
@@ -73,6 +82,9 @@ public class LogInActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.et_email);
         etParola = findViewById(R.id.et_parola);
         btnLogIn = findViewById(R.id.log_in);
+        switchBtn=findViewById(R.id.switch_remember_me);
+        preferences=getSharedPreferences(SHARED_PREF_USER, MODE_PRIVATE);
+        getUserDetailsFromSharedPref();
     }
 
     private boolean validate() {
@@ -87,7 +99,24 @@ public class LogInActivity extends AppCompatActivity {
             etParola.setError(getString(R.string.err_parola));
             return false;
         }
-
         return true;
+    }
+    private void saveUserToSharePref(){
+        SharedPreferences.Editor editor = preferences.edit();
+        if(switchBtn.isChecked()){
+            editor.putBoolean(SALVAT, true);
+            String email=etEmail.getText().toString().trim();
+            editor.putString(EMAIL, email);
+            String parola=etParola.getText().toString().trim();
+            editor.putString(PAROLA,parola);
+            editor.apply();
+        }else{
+            editor.clear().apply();
+        }
+    }
+    private void getUserDetailsFromSharedPref(){
+        switchBtn.setChecked(preferences.getBoolean(SALVAT,false));
+        etEmail.setText(preferences.getString(EMAIL,""));
+        etParola.setText(preferences.getString(PAROLA,""));
     }
 }
