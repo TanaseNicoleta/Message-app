@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class BankActivity extends AppCompatActivity {
+public class BankActivity extends AppCompatActivity implements EditBankDialog.EditBankDialogListener {
     public static final String BANK_LIST = "Bank list";
     public static final String UPDATED_BANKS = "Updated banks";
     public static final String BANK_PREF = "BankPref";
@@ -59,7 +59,7 @@ public class BankActivity extends AppCompatActivity {
     }
 
     private void notifyAdapter() {
-        BankAdapter adapter = new BankAdapter(getApplicationContext(), R.layout.lv_bank, bankList, getLayoutInflater());
+        ArrayAdapter adapter = (BankAdapter) lvBank.getAdapter();
         adapter.notifyDataSetChanged();
     }
 
@@ -113,6 +113,8 @@ public class BankActivity extends AppCompatActivity {
 
     }
 
+
+
     private BottomNavigationView.OnNavigationItemSelectedListener addBottomNavView() {
         return new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -142,4 +144,37 @@ public class BankActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void sendBank(Bank bank) {
+        Map<String, ?> bankEntries = preferences.getAll();
+        SharedPreferences.Editor editor = preferences.edit();
+
+        for (Map.Entry<String, ?> bankEntry : bankEntries.entrySet()) {
+            String dateBanca = bankEntry.getValue().toString();
+            String[] datas = dateBanca.split(",");
+            if (datas[0].equals(bank.getDenumireBanca())) {
+                datas[2] = String.valueOf(bank.getComision());
+
+                StringBuilder sb = new StringBuilder();
+                for (String data : datas) {
+                    sb.append(data);
+                    sb.append(",");
+                }
+                String str = sb.toString();
+                str = str.substring(0, str.length() - 1);
+                editor.putString(bankEntry.getKey(), str);
+                editor.commit();
+
+            }
+
+        }
+
+        for(Bank b : bankList) {
+            if(b.getDenumireBanca().equals(bank.getDenumireBanca())) {
+                b.setComision(bank.getComision());
+            }
+        }
+
+        notifyAdapter();
+    }
 }

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,8 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.messageapp.BankActivity;
 import com.example.messageapp.R;
+import com.example.messageapp.database.model.Contact;
+import com.example.messageapp.util.Bank;
 
 import java.util.Map;
 
@@ -34,8 +37,9 @@ public class EditBankDialog extends AppCompatDialogFragment {
     private TextView tvAdresa, tvDenumire;
     Float oldCom = null;
     String denumire, adresa;
+    private Bank bank;
     private SharedPreferences preferences, clickedPref;
-
+    EditBankDialogListener listener;
 
     @NonNull
     @Override
@@ -54,6 +58,7 @@ public class EditBankDialog extends AppCompatDialogFragment {
             denumire=datas[0].trim();
             adresa=datas[1].trim();
             oldCom = Float.parseFloat(datas[2]);
+            bank = new Bank(datas[0], datas[1], Float.parseFloat(datas[2]));
 
             tvDenumire.setText(datas[0]);
             tvAdresa.setText(datas[1]);
@@ -71,10 +76,8 @@ public class EditBankDialog extends AppCompatDialogFragment {
         .setPositiveButton(R.string.salveaza, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                modificaComision(Float.parseFloat(etComision.getText().toString().trim()),denumire);
-                getActivity().finish();
-                Intent intent = new Intent(getContext(), BankActivity.class);
-                startActivity(intent);
+                bank.setComision(Float.parseFloat(etComision.getText().toString().trim()));
+                listener.sendBank(bank);
             }
         });
 
@@ -87,30 +90,14 @@ public class EditBankDialog extends AppCompatDialogFragment {
         tvAdresa = view.findViewById(R.id.tv_bank_adress);
     }
 
-    private void modificaComision(Float com, String denumire) {
-        Map<String, ?> bankEntries = preferences.getAll();
-        SharedPreferences.Editor editor = preferences.edit();
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        listener = (EditBankDialog.EditBankDialogListener) context;
+    }
 
-        for (Map.Entry<String, ?> bankEntry : bankEntries.entrySet()) {
-            String dateBanca = bankEntry.getValue().toString();
-            String[] datas = dateBanca.split(",");
-            if (datas[0].equals(denumire)) {
-                datas[2] = String.valueOf(com);
-
-                StringBuilder sb = new StringBuilder();
-                for (String data : datas) {
-                    sb.append(data);
-                    sb.append(",");
-                }
-                String str = sb.toString();
-                str = str.substring(0, str.length() - 1);
-                editor.putString(bankEntry.getKey(), str);
-                editor.commit();
-
-            }
-
-        }
-
+    public interface EditBankDialogListener {
+        void sendBank(Bank bank);
     }
 }
 
