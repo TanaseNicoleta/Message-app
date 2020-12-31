@@ -124,5 +124,6 @@
     <string name="inregistrare_credit_nou">Inregistrare credit nou</string>
     <string name="neinserare_credit">Nu ati inserat credit</string>
     <string name="message_update">Toate contactele au primit mesaj de update comision</string>
+    <string name="cauta">Cauta o banca</string>
 
 </resources>

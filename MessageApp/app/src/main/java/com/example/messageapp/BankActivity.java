@@ -76,7 +76,7 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
     private Intent intent;
     private SharedPreferences preferences;
 
-    ImageView ivSendSMS;
+    ImageView ivSendSMS, map;
     Bank bancaEditata;
 
     @Override
@@ -93,16 +93,14 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
     private void initComponents() {
         ivSendSMS=findViewById(R.id.iv_bank_activity_send_sms);
         lvBank=findViewById(R.id.lv_bank_detail);
+        map=findViewById(R.id.iv_bank_map);
         bottomNavigationView=findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_view_detalii_banca);
         bottomNavigationView.setOnNavigationItemSelectedListener(addBottomNavView());
         BankAdapter adapter = new BankAdapter(getApplicationContext(), R.layout.lv_bank, bankList, getLayoutInflater());
         lvBank.setAdapter(adapter);
         lvBank.setOnItemClickListener(openEditBankDialog());
-
         preferencesMesaje=getSharedPreferences(SHARED_PREF_MESSAGE, Context.MODE_PRIVATE);
-
-
         getUserName();
 
         ivSendSMS.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +120,14 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
                         }
                     }
                 }
+            }
+        });
+
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -180,8 +186,6 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
 
     }
 
-
-
     private BottomNavigationView.OnNavigationItemSelectedListener addBottomNavView() {
         return new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -209,7 +213,6 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
             }
         };
     }
-
 
     @Override
     public void sendBank(Bank bank) {
