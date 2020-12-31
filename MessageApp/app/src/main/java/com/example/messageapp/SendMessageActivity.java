@@ -43,15 +43,17 @@ public class SendMessageActivity extends AppCompatActivity {
     public static final String SUMA_CONT_FINALA_KEY = "suma cont finala key";
     public static final String DATA_TRIMITERII = "Data trimiterii";
     public static final String USER_CARE_A_TRIMIS_MESAJUL = "User care a trimis mesajul";
+    public static final String CREDIT_NOU_INSERAT_KEY = "Credit nou inserat key";
 
     private Contact contact;
     private Credit creditEditat;
     private Credit creditSters;
+    private Credit creditNou;
     private Float sumaContFinal;
     private String numeUser;
     private String prenumeUser;
 
-    private CardView mesajAniversar;
+    private CardView mesajCreditNou;
     private CardView updateSumaCont;
     private CardView updateDobanda;
     private CardView terminareCredit;
@@ -72,12 +74,13 @@ public class SendMessageActivity extends AppCompatActivity {
         creditEditat= (Credit) intent.getParcelableExtra(CREDIT_EDITAT_SEND_MESSAJE);
         creditSters= (Credit) intent.getParcelableExtra(CREDIT_STERS_SEND_MESSAGE);
         sumaContFinal=intent.getFloatExtra(SUMA_CONT_FINALA_KEY, -1);
+        creditNou=(Credit)intent.getParcelableExtra(CREDIT_NOU_INSERAT_KEY);
         initComponents();
         getUserName();
     }
 
     private  void initComponents(){
-        mesajAniversar=findViewById(R.id.cv_send_lma);
+        mesajCreditNou=findViewById(R.id.cv_send_credit_nou);
         updateSumaCont=findViewById(R.id.cv_update_suma_cont);
         updateDobanda=findViewById(R.id.cv_update_dobanda);
         terminareCredit=findViewById(R.id.cv_terminare_credit);
@@ -89,7 +92,7 @@ public class SendMessageActivity extends AppCompatActivity {
         String numeFisier=String.valueOf(contact.getId());
         preferencesMesajAnterior=getSharedPreferences(numeFisier,MODE_PRIVATE);
 
-        mesajAniversar.setOnClickListener(populateEditTextLMA());
+        mesajCreditNou.setOnClickListener(populateEditTextCreditNou());
         updateSumaCont.setOnClickListener(populateTvUpdateSumaCont());
         updateDobanda.setOnClickListener(populateTvUpdateDobanda());
         terminareCredit.setOnClickListener(populateTvTerminareCredit());
@@ -171,20 +174,26 @@ public class SendMessageActivity extends AppCompatActivity {
         }
     }
 
-    private View.OnClickListener populateEditTextLMA() {
-        //sa verific daca e ziua lui
+    private View.OnClickListener populateEditTextCreditNou() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(contact!=null){
-                    Date currentDate=new Date();
-                    String data=DateConverter.fromDate(currentDate);
-                    if(data.substring(0,5).equalsIgnoreCase(DateConverter.fromDate(contact.getDataNasterii()).substring(0,5))){
-                        mesaj=getString(R.string.mesajLMA, contact.getPrenume());
-                        etMesaj.setText(mesaj);
-                    }else{
-                        Toast.makeText(getApplicationContext(), R.string.invalid_birthdate_error,Toast.LENGTH_LONG).show();
-                    }
+//                if(contact!=null){
+//                    Date currentDate=new Date();
+//                    String data=DateConverter.fromDate(currentDate);
+//                    if(data.substring(0,5).equalsIgnoreCase(DateConverter.fromDate(contact.getDataNasterii()).substring(0,5))){
+//                        mesaj=getString(R.string.mesajLMA, contact.getPrenume());
+//                        etMesaj.setText(mesaj);
+//                    }else{
+//                        Toast.makeText(getApplicationContext(), R.string.invalid_birthdate_error,Toast.LENGTH_LONG).show();
+//                    }
+//                }
+                if(creditNou!=null){
+                    mesaj=getString(R.string.mesajInserareCreditNou, contact.getPrenume(), creditNou.getDenumireCredit(),
+                            creditNou.getSumaImprumutata());
+                    etMesaj.setText(mesaj);
+                }else{
+                    Toast.makeText(getApplicationContext(), R.string.neinserare_credit, Toast.LENGTH_LONG).show();
                 }
             }
         };

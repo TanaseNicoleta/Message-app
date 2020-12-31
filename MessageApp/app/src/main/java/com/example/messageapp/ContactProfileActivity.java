@@ -40,6 +40,7 @@ public class ContactProfileActivity extends AppCompatActivity implements EditCon
     public static final String CREDIT_STERS_SEND_MESSAGE = "credit sters send message";
     public static final String SUMA_CONT_FINALA_KEY = "suma cont finala key";
     public static final String MESAJ_ANTERIOR_CONTACT = "mesaj anterior";
+    public static final String CREDIT_NOU_INSERAT_KEY = "Credit nou inserat key";
 
     private ListView lvContact;
     private ListView lvCredits;
@@ -52,10 +53,11 @@ public class ContactProfileActivity extends AppCompatActivity implements EditCon
 
     private ImageView trimiteMesaj;
     private ImageView mesajAnterior;
-    private Button btnAddContact;
+    private Button btnAddCredit;
 
     Credit creditEditat;
     Credit creditSters;
+    Credit creditNou;
 
     private float dobandaInitiala;
     private float dobandaFinala;
@@ -109,7 +111,7 @@ public class ContactProfileActivity extends AppCompatActivity implements EditCon
         lvCredits=findViewById(R.id.lv_credits_details);
         trimiteMesaj=findViewById(R.id.iv_trimite_mesaj);
         mesajAnterior=findViewById(R.id.iv_mesaje_anterioare);
-        btnAddContact=findViewById(R.id.btn_contact_profile_add_credit);
+        btnAddCredit=findViewById(R.id.btn_contact_profile_add_credit);
         addLvContact();
         addLvCredits();
         lvContact.setOnItemClickListener(openEditContactDialog());
@@ -117,7 +119,7 @@ public class ContactProfileActivity extends AppCompatActivity implements EditCon
         lvCredits.setOnItemLongClickListener(stergeCreditEventListener());
         trimiteMesaj.setOnClickListener(openSendMessageActivity());
         mesajAnterior.setOnClickListener(openPreviousMessageActivity());
-        btnAddContact.setOnClickListener(new View.OnClickListener() {
+        btnAddCredit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog();
@@ -134,6 +136,7 @@ public class ContactProfileActivity extends AppCompatActivity implements EditCon
     public void sendCredit(String denumireCredit, float sumaImprumutata, float dobanda, int durataAni) {
         Credit credit=new Credit(denumireCredit,sumaImprumutata,dobanda,durataAni);
         creditService.insert(insertCreditDbCallback(), credit,contacts.get(0));
+        creditNou=credit;
     }
 
     private Callback<Credit> insertCreditDbCallback() {
@@ -176,6 +179,7 @@ public class ContactProfileActivity extends AppCompatActivity implements EditCon
                     intent.putExtra(CREDIT_EDITAT_SEND_MESSAJE, creditEditat);
                 }
                 intent.putExtra(CREDIT_STERS_SEND_MESSAGE, creditSters);
+                intent.putExtra(CREDIT_NOU_INSERAT_KEY,creditNou);
                 startActivity(intent);
             }
         };
