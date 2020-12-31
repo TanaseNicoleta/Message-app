@@ -2,33 +2,71 @@ package com.example.messageapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.amitshekhar.utils.Constants;
 import com.example.messageapp.adapters.BankAdapter;
+import com.example.messageapp.asyncTask.Callback;
+import com.example.messageapp.database.model.Contact;
+import com.example.messageapp.database.service.ContactService;
 import com.example.messageapp.dialogs.EditBankDialog;
 import com.example.messageapp.util.Bank;
+import com.example.messageapp.util.DateConverter;
+import com.example.messageapp.util.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class BankActivity extends AppCompatActivity implements EditBankDialog.EditBankDialogListener {
+
+    public static final String SHARED_PREF_MESSAGE = "messagesSharedPred";
+    public static final String MESAJ = "mesaj";
+    public static final String MESAJANTERIOR = "mesaj anterior";
+
+    public static final String CONTACT_KEY_SEND_MESSAGE = "contact key send message";
+    public static final String CREDIT_EDITAT_SEND_MESSAJE = "credit editat send messaje";
+    public static final String CREDIT_STERS_SEND_MESSAGE = "credit sters send message";
+    public static final String SUMA_CONT_FINALA_KEY = "suma cont finala key";
+    public static final String DATA_TRIMITERII = "Data trimiterii";
+    public static final String USER_CARE_A_TRIMIS_MESAJUL = "User care a trimis mesajul";
+    public static final String CREDIT_NOU_INSERAT_KEY = "Credit nou inserat key";
+    private SharedPreferences preferencesMesaje;
+    private SharedPreferences preferencesMesajAnterior; //aici salvez mesajul anterior trimis unui contact
+    String numeUser, prenumeUser;
+    List<Contact>contacts=new ArrayList<>();
+    ContactService contactService;
+
     public static final String BANK_LIST = "Bank list";
     public static final String UPDATED_BANKS = "Updated banks";
     public static final String BANK_PREF = "BankPref";
@@ -38,16 +76,22 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
     private Intent intent;
     private SharedPreferences preferences;
 
+    ImageView ivSendSMS;
+    Bank bancaEditata;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank);
+        contactService = new ContactService(getApplicationContext());
+        contactService.getAllContacts(getAllContactsFromDbCallback());
         intent=getIntent();
         populateBankListFromPref();
         initComponents();
     }
 
     private void initComponents() {
+        ivSendSMS=findViewById(R.id.iv_bank_activity_send_sms);
         lvBank=findViewById(R.id.lv_bank_detail);
         bottomNavigationView=findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_view_detalii_banca);
@@ -56,6 +100,30 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
         lvBank.setAdapter(adapter);
         lvBank.setOnItemClickListener(openEditBankDialog());
 
+        preferencesMesaje=getSharedPreferences(SHARED_PREF_MESSAGE, Context.MODE_PRIVATE);
+
+
+        getUserName();
+
+        ivSendSMS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bancaEditata!=null){
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+                        if(checkSelfPermission(Manifest.permission.SEND_SMS)== PackageManager.PERMISSION_GRANTED){
+                            if(!contacts.isEmpty()){
+                                for(Contact contact:contacts){
+                                    sendSMS(contact);
+                                }
+                            }
+                            Toast.makeText(getApplicationContext(),getString(R.string.message_update),Toast.LENGTH_LONG).show();
+                        }else{
+                            requestPermissions(new String[]{Manifest.permission.SEND_SMS},1);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void notifyAdapter() {
@@ -75,7 +143,6 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
                 e.clear();
                 e.putString(String.valueOf(i), clickedBanca.toString());
                 e.commit();
-
             }
         };
         return onItemClickListener;
@@ -146,6 +213,7 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
 
     @Override
     public void sendBank(Bank bank) {
+        bancaEditata=bank;
         Map<String, ?> bankEntries = preferences.getAll();
         SharedPreferences.Editor editor = preferences.edit();
 
@@ -166,7 +234,6 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
                 editor.commit();
 
             }
-
         }
 
         for(Bank b : bankList) {
@@ -174,7 +241,74 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
                 b.setComision(bank.getComision());
             }
         }
-
         notifyAdapter();
+    }
+
+    private Callback<List<Contact>> getAllContactsFromDbCallback() {
+        return new Callback<List<Contact>>() {
+            @Override
+            public void runResultOnUiThread(List<Contact> result) {
+                if (result != null) {
+                    contacts.addAll(result);
+                    notifyAdapter();
+                }
+            }
+        };
+    }
+    private void sendSMS(Contact contact) {
+        String phoneNo=contact.getTelefon().trim();
+        try{
+            SmsManager smsManager=SmsManager.getDefault();
+            String mesaj=getString(R.string.mesajUpdateComision, contact.getPrenume(), bancaEditata.getDenumireBanca(), bancaEditata.getComision());
+            smsManager.sendTextMessage(phoneNo,null,mesaj,null,null);
+            //Toast.makeText(getApplicationContext(), getString(R.string.toastTrimitereSMS,contact.getPrenume()),Toast.LENGTH_LONG).show();
+
+            //tin evidenta in fisierul de prefetinte cu toate mesajele
+            SharedPreferences.Editor editor = preferencesMesaje.edit();
+            String mesajAnterior=preferencesMesaje.getString(MESAJ,"");
+            String mesajDeScris=mesajAnterior+getString(R.string.separator_de_mesaje)+mesaj;
+            editor.putString(MESAJ,mesajDeScris);
+            editor.apply();
+
+            //salvez in fisierul de preferinte al fiecarui contact pentru a vedea ultimul mesaj trimis din pagina de profil
+            String numeFisier=String.valueOf(contact.getId());
+            preferencesMesajAnterior=getSharedPreferences(numeFisier,MODE_PRIVATE);
+            SharedPreferences.Editor editor2 = preferencesMesajAnterior.edit();
+            String mesajScris=mesaj;
+            Date date=new Date();
+            String data= DateConverter.fromDate(date);
+            editor2.putString(MESAJANTERIOR,mesajScris);
+            editor2.putString(DATA_TRIMITERII,data);
+            if(numeUser!=null && prenumeUser !=null){
+                editor2.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.numeUser, numeUser,prenumeUser));
+            }else{
+                editor2.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.no_user));
+            }
+            editor2.apply();
+
+        }catch(Exception e){
+            Toast.makeText(getApplicationContext(), R.string.faild_send_message,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void getUserName() {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
+        final String userId = user.getUid();
+
+        database.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User profile = snapshot.getValue(User.class);
+                if(profile != null) {
+                    numeUser=profile.getNume();
+                    prenumeUser=profile.getPrenume();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), R.string.msj_error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

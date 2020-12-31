@@ -19,4 +19,6 @@
     <color name="startColor2">#3cb09b</color>
     <color name="startColor3">#3b484e</color>
     <color name="ligthBlue">#90e0ef</color>
+    <color name="redColor">#f00</color>
+    <color name="blueColor">#00f</color>
 </resources>

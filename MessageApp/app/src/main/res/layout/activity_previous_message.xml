@@ -51,7 +51,6 @@
         style="@style/Lv_credit_text_style"
         android:textStyle="italic"
         android:text="@string/trimis"
-        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

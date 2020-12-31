@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".BankActivity">
 
+    <ImageView
+        android:id="@+id/iv_bank_activity_send_sms"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_message"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/lv_bank_detail"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
         <ListView
             android:id="@+id/lv_bank_detail"
             android:layout_width="match_parent"
@@ -13,7 +24,7 @@
             android:layout_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_bank_activity_send_sms"
             app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
