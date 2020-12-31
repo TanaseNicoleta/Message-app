@@ -63,8 +63,6 @@ public class SendMessageActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private SharedPreferences preferencesMesajAnterior; //aici salvez mesajul anterior trimis unui contact
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,11 +163,11 @@ public class SendMessageActivity extends AppCompatActivity {
         try{
             SmsManager smsManager=SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNo,null,mesaj,null,null);
-            Toast.makeText(getApplicationContext(),"Message is sent",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.trimis_cu_succes,Toast.LENGTH_LONG).show();
             Log.i("NR DE TEL", phoneNo);
 
         }catch(Exception e){
-            Toast.makeText(getApplicationContext(),"Failed to send message",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.failed_to_send,Toast.LENGTH_LONG).show();
         }
     }
 
@@ -215,7 +213,7 @@ public class SendMessageActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void  getUserName() {
+    public void getUserName() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
         final String userId = user.getUid();

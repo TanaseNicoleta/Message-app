@@ -117,5 +117,7 @@
     <string name="faild_send_message">Failed to send message</string>
     <string name="informare_trimitere_mesaje">Toti sarbatoritii au primit mesaj</string>
     <string name="intrebare">Cui vrei sa i trimiti?</string>
+    <string name="trimis_cu_succes">Message is sent</string>
+    <string name="failed_to_send">Failed to send message</string>
 
 </resources>

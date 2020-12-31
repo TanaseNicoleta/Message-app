@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.messageapp.adapters.ContactProfileAdapter;
 import com.example.messageapp.adapters.CreditAdapter;
@@ -27,7 +30,7 @@ import java.util.List;
 
 
 public class ContactProfileActivity extends AppCompatActivity implements EditContactDialog.EditContactDialogListener,
-        EditCreditDialog.EditCreditDialogListener{
+        EditCreditDialog.EditCreditDialogListener, CustomDialog.CustomDialogListener{
 
     public static final String EDIT_CONTACT_KEY = "Edit contact key";
     public static final String CONTACT_PROFILE_KEY = "Contact profile";
@@ -49,6 +52,7 @@ public class ContactProfileActivity extends AppCompatActivity implements EditCon
 
     private ImageView trimiteMesaj;
     private ImageView mesajAnterior;
+    private Button btnAddContact;
 
     Credit creditEditat;
     Credit creditSters;
@@ -105,6 +109,7 @@ public class ContactProfileActivity extends AppCompatActivity implements EditCon
         lvCredits=findViewById(R.id.lv_credits_details);
         trimiteMesaj=findViewById(R.id.iv_trimite_mesaj);
         mesajAnterior=findViewById(R.id.iv_mesaje_anterioare);
+        btnAddContact=findViewById(R.id.btn_contact_profile_add_credit);
         addLvContact();
         addLvCredits();
         lvContact.setOnItemClickListener(openEditContactDialog());
@@ -112,7 +117,37 @@ public class ContactProfileActivity extends AppCompatActivity implements EditCon
         lvCredits.setOnItemLongClickListener(stergeCreditEventListener());
         trimiteMesaj.setOnClickListener(openSendMessageActivity());
         mesajAnterior.setOnClickListener(openPreviousMessageActivity());
+        btnAddContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
     }
+
+    private void openDialog(){
+        CustomDialog dialog = new CustomDialog();
+        dialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+    }
+
+    @Override
+    public void sendCredit(String denumireCredit, float sumaImprumutata, float dobanda, int durataAni) {
+        Credit credit=new Credit(denumireCredit,sumaImprumutata,dobanda,durataAni);
+        creditService.insert(insertCreditDbCallback(), credit,contacts.get(0));
+    }
+
+    private Callback<Credit> insertCreditDbCallback() {
+        return new Callback<Credit>() {
+            @Override
+            public void runResultOnUiThread(Credit result) {
+                if (result != null) {
+                    credits.add(result);
+                    notifyCreditsAdapter();
+                }
+            }
+        };
+    }
+
 
     private View.OnClickListener openPreviousMessageActivity() {
         return new View.OnClickListener() {

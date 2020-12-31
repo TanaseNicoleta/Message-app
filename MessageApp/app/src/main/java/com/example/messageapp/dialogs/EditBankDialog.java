@@ -61,7 +61,6 @@ public class EditBankDialog extends AppCompatDialogFragment {
 
         }
 
-
         builder.setView(view).setTitle(R.string.dialog_edit_commission)
                 .setNegativeButton(R.string.renunta, new DialogInterface.OnClickListener() {
                     @Override
@@ -112,8 +111,6 @@ public class EditBankDialog extends AppCompatDialogFragment {
 
         }
 
-
     }
-
 }
 

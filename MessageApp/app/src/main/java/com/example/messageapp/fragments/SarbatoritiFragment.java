@@ -1,6 +1,7 @@
 package com.example.messageapp.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.messageapp.R;
 import com.example.messageapp.RadarChartActivity;
+import com.example.messageapp.SendMessageActivity;
 import com.example.messageapp.adapters.ContactAdapter;
 import com.example.messageapp.database.model.Contact;
 import com.example.messageapp.util.DateConverter;
@@ -84,6 +86,14 @@ public class SarbatoritiFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_sarbatoriti, container, false);
         initComponents(view);
         getUserName();
+
+
+        Activity activity = getActivity();
+        if(activity instanceof SendMessageActivity){
+            SendMessageActivity myactivity = (SendMessageActivity) activity;
+            myactivity.getUserName();
+        }
+
         return view;
     }
     private void initComponents(View view) {
@@ -100,6 +110,7 @@ public class SarbatoritiFragment extends Fragment {
 
         ivRadar.setOnClickListener(openRadarActivity());
         ivSendSMS.setOnClickListener(trimitereMesajeTuturorSarbatoritilor());
+
     }
 
     private View.OnClickListener trimitereMesajeTuturorSarbatoritilor() {

@@ -8,6 +8,7 @@ import com.example.messageapp.database.DatabaseManager;
 import com.example.messageapp.database.dao.ContactDao;
 import com.example.messageapp.database.dao.CreditDao;
 import com.example.messageapp.database.model.Contact;
+import com.example.messageapp.database.model.ContactWithCredits;
 import com.example.messageapp.database.model.Credit;
 
 import java.util.List;
@@ -60,20 +61,21 @@ public class CreditService {
         Callable<Credit> callable = new Callable<Credit>() {
             @Override
             public Credit call() {
-                if (credit == null ||contact==null) {
+                if (credit == null || contact==null) {
                     return null;
                 }
+                credit.setContactId(contact.getId());
                 long id = creditDao.insert(credit);
                 if (id == -1) {
                     return null;
                 }
                 credit.setId(id);
-                credit.setContactId(contact.getId());
                 return credit;
             }
         };
         taskRunner.executeAsync(callable, callback);
     }
+
 
     public void update(Callback<Credit> callback, final Credit credit) {
         Callable<Credit> callable = new Callable<Credit>() {

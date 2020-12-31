@@ -21,18 +21,28 @@
 
     <TextView
         android:id="@+id/contact_profile_tv_credite"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:text="@string/credite"
         android:textAllCaps="true"
         android:textColor="@color/startColor2"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lv_contacts_details" />
+
+    <Button
+        android:id="@+id/btn_contact_profile_add_credit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:text="@string/adauga_credit"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lv_contacts_details" />
 
     <ScrollView
