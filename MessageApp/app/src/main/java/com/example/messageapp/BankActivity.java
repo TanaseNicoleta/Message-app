@@ -88,7 +88,7 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
     private void initComponents() {
         ivSendSMS=findViewById(R.id.iv_bank_activity_send_sms);
         lvBank=findViewById(R.id.lv_bank_detail);
-
+        map = findViewById(R.id.iv_bank_map);
         bottomNavigationView=findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_view_detalii_banca);
         bottomNavigationView.setOnNavigationItemSelectedListener(addBottomNavView());
@@ -99,6 +99,13 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
         getUserName();
 
         ivSendSMS.setOnClickListener(sendSMSEvent());
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void notifyAdapter() {
