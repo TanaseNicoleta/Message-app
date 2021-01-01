@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MessageApp</string>
+    <string name="app_name">SMS Banking</string>
     <string name="acasa">Acasa</string>
     <string name="banca">Banca</string>
     <string name="profil">Profil</string>
@@ -20,7 +20,7 @@
     <string name="suma_imprumutata">Suma imprumutata</string>
     <string name="dobanda">Dobanda</string>
     <string name="durata_ani">Durata ani</string>
-    <string name="credit">Credit</string>
+    <string name="credit">Adauga credit</string>
     <string name="adauga">Adauga</string>
     <string name="dialog">dialog</string>
     <string name="invalid_denumire_credit_error">Completati denumire credit</string>
@@ -121,7 +121,7 @@
     <string name="intrebare">Cui vrei sa i trimiti?</string>
     <string name="trimis_cu_succes">Message is sent</string>
     <string name="failed_to_send">Failed to send message</string>
-    <string name="inregistrare_credit_nou">Inregistrare credit nou</string>
+    <string name="inregistrare_credit_nou">Inregistrare credit</string>
     <string name="neinserare_credit">Nu ati inserat credit</string>
     <string name="message_update">Toate contactele au primit mesaj de update comision</string>
     <string name="cauta">Cauta o banca</string>
