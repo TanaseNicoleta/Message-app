@@ -125,5 +125,6 @@
     <string name="neinserare_credit">Nu ati inserat credit</string>
     <string name="message_update">Toate contactele au primit mesaj de update comision</string>
     <string name="cauta">Cauta o banca</string>
+    <string name="comision_nemodificat">Nu ati updatat niciun comision</string>
 
 </resources>

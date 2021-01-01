@@ -31,12 +31,10 @@ public class PieChartActivity extends AppCompatActivity {
     public static final String SUB_3000 = "sub 3000";
     public static final String INTRE_3000_SI_6000 = "intre 3000 si 6000";
 
-
     List<Contact>contactePeste6000=new ArrayList<>();
     List<Contact>contactePanaIn3000=new ArrayList<>();
     List<Contact>contacteIntre3000si6000=new ArrayList<>();
     PieChart pieChart;
-    Map<String,Float>mapa=new HashMap<>();
     private Intent intent;
 
     ArrayList<PieEntry> pieEntries=new ArrayList<>();

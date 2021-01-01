@@ -83,7 +83,6 @@ public class ContactsActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
-    // get pt contacte
     private Callback<List<Contact>> getAllContactsFromDbCallback() {
         return new Callback<List<Contact>>() {
             @Override

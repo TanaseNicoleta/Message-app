@@ -52,16 +52,11 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
 
     public static final String SHARED_PREF_MESSAGE = "messagesSharedPred";
     public static final String MESAJ = "mesaj";
-    public static final String MESAJANTERIOR = "mesaj anterior";
-
-    public static final String CONTACT_KEY_SEND_MESSAGE = "contact key send message";
-    public static final String CREDIT_EDITAT_SEND_MESSAJE = "credit editat send messaje";
-    public static final String CREDIT_STERS_SEND_MESSAGE = "credit sters send message";
-    public static final String SUMA_CONT_FINALA_KEY = "suma cont finala key";
+    public static final String MESAJANTERIOR = "mesaj anterior";;
     public static final String DATA_TRIMITERII = "Data trimiterii";
     public static final String USER_CARE_A_TRIMIS_MESAJUL = "User care a trimis mesajul";
-    public static final String CREDIT_NOU_INSERAT_KEY = "Credit nou inserat key";
-    private SharedPreferences preferencesMesaje;
+
+    private SharedPreferences preferencesMesaje; //aici salvez toate mesajele
     private SharedPreferences preferencesMesajAnterior; //aici salvez mesajul anterior trimis unui contact
     String numeUser, prenumeUser;
     List<Contact>contacts=new ArrayList<>();
@@ -103,7 +98,19 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
         preferencesMesaje=getSharedPreferences(SHARED_PREF_MESSAGE, Context.MODE_PRIVATE);
         getUserName();
 
-        ivSendSMS.setOnClickListener(new View.OnClickListener() {
+        ivSendSMS.setOnClickListener(sendSMSEvent());
+
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private View.OnClickListener sendSMSEvent() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(bancaEditata!=null){
@@ -119,17 +126,11 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
                             requestPermissions(new String[]{Manifest.permission.SEND_SMS},1);
                         }
                     }
+                }else{
+                    Toast.makeText(getApplicationContext(), R.string.comision_nemodificat,Toast.LENGTH_LONG).show();
                 }
             }
-        });
-
-        map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-                startActivity(intent);
-            }
-        });
+        };
     }
 
     private void notifyAdapter() {
@@ -264,34 +265,41 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
             SmsManager smsManager=SmsManager.getDefault();
             String mesaj=getString(R.string.mesajUpdateComision, contact.getPrenume(), bancaEditata.getDenumireBanca(), bancaEditata.getComision());
             smsManager.sendTextMessage(phoneNo,null,mesaj,null,null);
-            //Toast.makeText(getApplicationContext(), getString(R.string.toastTrimitereSMS,contact.getPrenume()),Toast.LENGTH_LONG).show();
 
-            //tin evidenta in fisierul de prefetinte cu toate mesajele
-            SharedPreferences.Editor editor = preferencesMesaje.edit();
-            String mesajAnterior=preferencesMesaje.getString(MESAJ,"");
-            String mesajDeScris=mesajAnterior+getString(R.string.separator_de_mesaje)+mesaj;
-            editor.putString(MESAJ,mesajDeScris);
-            editor.apply();
+            //tin evidenta in fisierul de preferinte cu toate mesajele
+            saveToPreferencesMesaje(mesaj);
 
             //salvez in fisierul de preferinte al fiecarui contact pentru a vedea ultimul mesaj trimis din pagina de profil
-            String numeFisier=String.valueOf(contact.getId());
-            preferencesMesajAnterior=getSharedPreferences(numeFisier,MODE_PRIVATE);
-            SharedPreferences.Editor editor2 = preferencesMesajAnterior.edit();
-            String mesajScris=mesaj;
-            Date date=new Date();
-            String data= DateConverter.fromDate(date);
-            editor2.putString(MESAJANTERIOR,mesajScris);
-            editor2.putString(DATA_TRIMITERII,data);
-            if(numeUser!=null && prenumeUser !=null){
-                editor2.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.numeUser, numeUser,prenumeUser));
-            }else{
-                editor2.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.no_user));
-            }
-            editor2.apply();
+            saveToPreferencesMesajAnterior(contact, mesaj);
 
         }catch(Exception e){
             Toast.makeText(getApplicationContext(), R.string.faild_send_message,Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void saveToPreferencesMesajAnterior(Contact contact, String mesaj) {
+        String numeFisier=String.valueOf(contact.getId());
+        preferencesMesajAnterior=getSharedPreferences(numeFisier,MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = preferencesMesajAnterior.edit();
+        String mesajScris=mesaj;
+        Date date=new Date();
+        String data= DateConverter.fromDate(date);
+        editor2.putString(MESAJANTERIOR,mesajScris);
+        editor2.putString(DATA_TRIMITERII,data);
+        if(numeUser!=null && prenumeUser !=null){
+            editor2.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.numeUser, numeUser,prenumeUser));
+        }else{
+            editor2.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.no_user));
+        }
+        editor2.apply();
+    }
+
+    private void saveToPreferencesMesaje(String mesaj) {
+        SharedPreferences.Editor editor = preferencesMesaje.edit();
+        String mesajAnterior=preferencesMesaje.getString(MESAJ,"");
+        String mesajDeScris=mesajAnterior+getString(R.string.separator_de_mesaje)+mesaj;
+        editor.putString(MESAJ,mesajDeScris);
+        editor.apply();
     }
 
     public void getUserName() {

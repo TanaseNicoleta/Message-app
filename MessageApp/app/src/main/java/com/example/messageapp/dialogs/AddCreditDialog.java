@@ -18,7 +18,7 @@ import com.example.messageapp.database.model.Contact;
 import com.example.messageapp.database.model.Credit;
 import com.example.messageapp.util.DateConverter;
 
-public class CustomDialog  extends AppCompatDialogFragment {
+public class AddCreditDialog extends AppCompatDialogFragment {
     private EditText etDenumireCredit;
     private EditText etSumaImprumutata;
     private EditText etDobanda;

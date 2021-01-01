@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String BANK_LIST = "Bank list";
     public static final int ADD_CONTACT_REQUEST_CODE = 200;
-    private final String URL="https://jsonkeeper.com/b/Q560";
+    private final String URL="https://jsonkeeper.com/b/F7QV";
     private BottomNavigationView bottomNavigationView;
     private List<Contact> contacts=new ArrayList<>();
     private List<Credit>credits=new ArrayList<>();
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         getDatasFromHttp();
         initComponents();
         contactService = new ContactService(getApplicationContext());
-        //ca sa verific daca bd e null
+        //ca sa verific daca bd nu are date. Daca nu are, inserez de la json. Daca are, nu mai inserez
         contactService.getAllContacts(getAllContactsFromDbCallback());
     }
 
@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
                     contactService.insert(insertContactIntoDbCallback(), contactWithCredits.contact);
                     Log.i("Contact simplu",contactWithCredits.contact.toString());
                 }else{
-                    //contactService.insert(contactWithCredits);
                     contactService.insert(insertContactWithCreditsIntoDbCallback(),contactWithCredits);
                     Log.i("Contact cu credite",contactWithCredits.toString());
 
@@ -192,9 +191,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void runResultOnUiThread(String result) {
                 JsonParser.fromJson(result,contacts,bankList,credits);
-                Log.i("Contacte:",contacts.toString());
-                Log.i("Banci:",bankList.toString());
-                Log.i("Credite:",credits.toString());
                 if(contactsAux.size()==0) {
                     int i=0;
                     for( Credit credit: credits){
@@ -202,9 +198,7 @@ public class MainActivity extends AppCompatActivity {
                         lista.add(credit);
                         ContactWithCredits contactWithCredits=new ContactWithCredits(contacts.get(i),lista);
                         i++;
-                        //contactService.insert(contactWithCredits);
                         contactService.insert(insertContactWithCreditsIntoDbCallback(),contactWithCredits);
-                        Log.i("CONTACTWITHCREDITS", contactWithCredits.toString());
                     }
                 }
             }
@@ -221,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    //noua varianta
     private Callback<ContactWithCredits> insertContactWithCreditsIntoDbCallback() {
         return new Callback<ContactWithCredits>() {
             @Override

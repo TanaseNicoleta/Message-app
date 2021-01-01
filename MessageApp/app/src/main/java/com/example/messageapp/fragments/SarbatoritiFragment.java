@@ -49,13 +49,10 @@ public class SarbatoritiFragment extends Fragment {
     public static final String SHARED_PREF_MESSAGE = "messagesSharedPred";
     public static final String SARBATORITI = "Sarbatoriti";
     public static final String MESAJ = "mesaj";
-
-    public static final String MESAJ_ANTERIOR_CONTACT = "mesaj anterior";
     public static final String MESAJANTERIOR = "mesaj anterior";
-    private SharedPreferences preferencesMesajAnterior;
-
     public static final String DATA_TRIMITERII = "Data trimiterii";
     public static final String USER_CARE_A_TRIMIS_MESAJUL = "User care a trimis mesajul";
+    private SharedPreferences preferencesMesajAnterior;
 
     String numeUser;
     String prenumeUser;
@@ -86,14 +83,6 @@ public class SarbatoritiFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_sarbatoriti, container, false);
         initComponents(view);
         getUserName();
-
-
-        Activity activity = getActivity();
-        if(activity instanceof SendMessageActivity){
-            SendMessageActivity myactivity = (SendMessageActivity) activity;
-            myactivity.getUserName();
-        }
-
         return view;
     }
     private void initComponents(View view) {
@@ -107,7 +96,6 @@ public class SarbatoritiFragment extends Fragment {
             addContactAdapter();
         }
         preferences=this.getActivity().getSharedPreferences(SHARED_PREF_MESSAGE, Context.MODE_PRIVATE);
-
         ivRadar.setOnClickListener(openRadarActivity());
         ivSendSMS.setOnClickListener(trimitereMesajeTuturorSarbatoritilor());
 
@@ -145,7 +133,6 @@ public class SarbatoritiFragment extends Fragment {
             }
         };
     }
-
     private void addContactAdapter() {
         ContactAdapter adapter=new ContactAdapter(getContext().getApplicationContext(),R.layout.lv_contact,contacts,getLayoutInflater());
         lvContacte.setAdapter(adapter);
@@ -160,31 +147,39 @@ public class SarbatoritiFragment extends Fragment {
             Toast.makeText(getContext().getApplicationContext(), getString(R.string.toastTrimitereSMS,contact.getPrenume()),Toast.LENGTH_LONG).show();
 
             //tin evidenta in fisierul de prefetinte cu toate mesajele
-            SharedPreferences.Editor editor = preferences.edit();
-            String mesajAnterior=preferences.getString(MESAJ,"");
-            String mesajDeScris=mesajAnterior+getString(R.string.separator_de_mesaje)+mesaj;
-            editor.putString(MESAJ,mesajDeScris);
-            editor.apply();
+            saveSMSToSharePref(mesaj);
 
             //salvez in fisierul de preferinte al fiecarui contact pentru a vedea ultimul mesaj trimis din pagina de profil
-            String numeFisier=String.valueOf(contact.getId());
-            preferencesMesajAnterior=this.getActivity().getSharedPreferences(numeFisier, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor2 = preferencesMesajAnterior.edit();
-            String mesajScris=mesaj;
-            Date date=new Date();
-            String data= DateConverter.fromDate(date);
-            editor2.putString(MESAJANTERIOR,mesajScris);
-            editor2.putString(DATA_TRIMITERII,data);
-            if(numeUser!=null && prenumeUser !=null){
-                editor2.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.numeUser, numeUser,prenumeUser));
-            }else{
-                editor2.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.no_user));
-            }
-            editor2.apply();
+            saveForPreviousSMSActivity(contact, mesaj);
 
         }catch(Exception e){
             Toast.makeText(getContext().getApplicationContext(), R.string.faild_send_message,Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void saveForPreviousSMSActivity(Contact contact, String mesaj) {
+        String numeFisier=String.valueOf(contact.getId());
+        preferencesMesajAnterior=this.getActivity().getSharedPreferences(numeFisier, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = preferencesMesajAnterior.edit();
+        String mesajScris=mesaj;
+        Date date=new Date();
+        String data= DateConverter.fromDate(date);
+        editor2.putString(MESAJANTERIOR,mesajScris);
+        editor2.putString(DATA_TRIMITERII,data);
+        if(numeUser!=null && prenumeUser !=null){
+            editor2.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.numeUser, numeUser,prenumeUser));
+        }else{
+            editor2.putString(USER_CARE_A_TRIMIS_MESAJUL,getString(R.string.no_user));
+        }
+        editor2.apply();
+    }
+
+    private void saveSMSToSharePref(String mesaj) {
+        SharedPreferences.Editor editor = preferences.edit();
+        String mesajAnterior=preferences.getString(MESAJ,"");
+        String mesajDeScris=mesajAnterior+getString(R.string.separator_de_mesaje)+mesaj;
+        editor.putString(MESAJ,mesajDeScris);
+        editor.apply();
     }
 
     private void  getUserName() {

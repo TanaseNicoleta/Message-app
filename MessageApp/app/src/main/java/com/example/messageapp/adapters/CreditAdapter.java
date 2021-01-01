@@ -22,7 +22,6 @@ public class CreditAdapter  extends ArrayAdapter<Credit> {
     private List<Credit> credits;
     private LayoutInflater inflater;
 
-
     public CreditAdapter(@NonNull Context context, int resource,
                                  @NonNull List<Credit> objects,
                                  LayoutInflater inflater) {
@@ -43,7 +42,6 @@ public class CreditAdapter  extends ArrayAdapter<Credit> {
             adaugaSumaImprumutata(view,String.valueOf(credit.getSumaImprumutata()));
             adaugaDobanda(view,String.valueOf(credit.getDobanda()));
             adaugaDurataAni(view,String.valueOf(credit.getDurataAni()));
-
         }
         return view;
     }

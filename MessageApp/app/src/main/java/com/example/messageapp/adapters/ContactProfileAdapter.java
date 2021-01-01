@@ -54,7 +54,6 @@ public class ContactProfileAdapter extends ArrayAdapter<Contact> {
         return view;
     }
     private void adaugaGen(View view, String gen){
-
         RadioGroup radioGroup=view.findViewById(R.id.lv_profile_rg_gen);
         RadioButton rb1=view.findViewById(R.id.lv_profile_rb_feminin);
         RadioButton rb2=view.findViewById(R.id.lv_profile_rb_masculin);

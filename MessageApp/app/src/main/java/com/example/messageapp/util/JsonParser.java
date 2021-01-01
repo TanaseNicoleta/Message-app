@@ -32,6 +32,7 @@ public class JsonParser {
         try {
             JSONArray vectorRezultate=new JSONArray(buffer);
             for(int i=0;i<vectorRezultate.length();i++){
+
                 JSONObject jsonObjectBank=vectorRezultate.getJSONObject(i);
                 String denumireBanca=jsonObjectBank.getString(DENUMIRE_BANCA);
                 String adresa=jsonObjectBank.getString(ADRESA);
@@ -59,7 +60,6 @@ public class JsonParser {
 
                 Credit credit=new Credit(denumireCredit,sumaImprumutata,dobanda,durataAni);
                 credits.add(credit);
-
             }
         } catch (JSONException e) {
             e.printStackTrace();

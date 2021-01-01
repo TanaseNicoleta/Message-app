@@ -15,8 +15,7 @@ public class StartActivity extends AppCompatActivity {
     Button btnLogIn, btnRegister;
     ImageView logo;
     Animation topAnimation;
-    //AICI apare un splash si apoi o sa fie 2 butoate de register si login
-    //Am putea adauga si un progressbar pt loginuri dar mai vedem :)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

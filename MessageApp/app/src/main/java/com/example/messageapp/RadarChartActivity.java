@@ -33,10 +33,14 @@ public class RadarChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_radar_chart);
         intent=getIntent();
         contactList=intent.getParcelableArrayListExtra(SARBATORITI);
-
         radarChart=findViewById(R.id.radar_chart);
+
         ArrayList<RadarEntry>radarEntries=new ArrayList<>();
 
+        drawRadarChart(radarEntries);
+    }
+
+    private void drawRadarChart(ArrayList<RadarEntry> radarEntries) {
         String[]labels = new String[contactList.size()];
         int i=0;
         for(Contact contact:contactList){

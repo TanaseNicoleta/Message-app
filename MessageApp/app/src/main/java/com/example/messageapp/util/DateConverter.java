@@ -15,7 +15,6 @@ public class DateConverter {
     @TypeConverter
     public static Date fromString(String value) {
         try {
-            //metoda parsa este folosita pentru conversia String to Date
             return formatter.parse(value);
         } catch (ParseException e) {
             return null;
@@ -26,7 +25,6 @@ public class DateConverter {
         if (value == null) {
             return null;
         }
-        //metoda format este utilizata pentru conversia Date to String
         return formatter.format(value);
     }
 }

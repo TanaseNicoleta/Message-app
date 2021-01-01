@@ -36,7 +36,6 @@ public class ClientsFragment extends Fragment {
     private List<Contact> contacteCuCreditePeste6000=new ArrayList<>();
     private ImageView ivPieChart;
 
-    //BD
     ContactService contactService;
     List<Contact>contactePeste6000=new ArrayList<>();
     List<Contact>contactePanaIn3000=new ArrayList<>();
@@ -78,7 +77,11 @@ public class ClientsFragment extends Fragment {
         if (getContext() != null) {
             addContactAdapter();
         }
-        ivPieChart.setOnClickListener(new View.OnClickListener() {
+        ivPieChart.setOnClickListener(openPieChartActivity());
+    }
+
+    private View.OnClickListener openPieChartActivity() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getContext().getApplicationContext(), PieChartActivity.class);
@@ -87,17 +90,13 @@ public class ClientsFragment extends Fragment {
                 intent.putParcelableArrayListExtra(INTRE_3000_SI_6000, (ArrayList<? extends Parcelable>) contacteIntre3000si6000);
                 startActivity(intent);
             }
-        });
+        };
     }
+
     private void addContactAdapter() {
         ContactAdapter adapter=new ContactAdapter(getContext().getApplicationContext(),R.layout.lv_contact,contacteCuCreditePeste6000,getLayoutInflater());
         lvContacte.setAdapter(adapter);
     }
-    public void notifyInternalAdapterClients() {
-        ArrayAdapter adapter = (ArrayAdapter) lvContacte.getAdapter();
-        adapter.notifyDataSetChanged();
-    }
-
     private Callback<List<Contact>> getContacteImprumutateCuPeste6000FromDbCallback() {
         return new Callback<List<Contact>>() {
             @Override

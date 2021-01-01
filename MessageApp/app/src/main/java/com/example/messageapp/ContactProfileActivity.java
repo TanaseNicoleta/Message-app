@@ -4,15 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.messageapp.adapters.ContactProfileAdapter;
 import com.example.messageapp.adapters.CreditAdapter;
@@ -21,7 +18,7 @@ import com.example.messageapp.database.model.Contact;
 import com.example.messageapp.database.model.Credit;
 import com.example.messageapp.database.service.ContactService;
 import com.example.messageapp.database.service.CreditService;
-import com.example.messageapp.dialogs.CustomDialog;
+import com.example.messageapp.dialogs.AddCreditDialog;
 import com.example.messageapp.dialogs.EditContactDialog;
 import com.example.messageapp.dialogs.EditCreditDialog;
 
@@ -30,7 +27,7 @@ import java.util.List;
 
 
 public class ContactProfileActivity extends AppCompatActivity implements EditContactDialog.EditContactDialogListener,
-        EditCreditDialog.EditCreditDialogListener, CustomDialog.CustomDialogListener{
+        EditCreditDialog.EditCreditDialogListener, AddCreditDialog.CustomDialogListener{
 
     public static final String EDIT_CONTACT_KEY = "Edit contact key";
     public static final String CONTACT_PROFILE_KEY = "Contact profile";
@@ -128,7 +125,7 @@ public class ContactProfileActivity extends AppCompatActivity implements EditCon
     }
 
     private void openDialog(){
-        CustomDialog dialog = new CustomDialog();
+        AddCreditDialog dialog = new AddCreditDialog();
         dialog.show(getSupportFragmentManager(), getString(R.string.dialog));
     }
 

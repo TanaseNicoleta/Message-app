@@ -62,7 +62,7 @@ public class SendMessageActivity extends AppCompatActivity {
     private Intent intent;
     private String mesaj;
 
-    private SharedPreferences preferences;
+    private SharedPreferences preferences; //aici salvam toate mesajele trimise
     private SharedPreferences preferencesMesajAnterior; //aici salvez mesajul anterior trimis unui contact
 
     @Override
@@ -86,12 +86,9 @@ public class SendMessageActivity extends AppCompatActivity {
         terminareCredit=findViewById(R.id.cv_terminare_credit);
         etMesaj=findViewById(R.id.et_mesaj);
         fabTrimite=findViewById(R.id.fab_trimite);
-
         preferences=getSharedPreferences(SHARED_PREF_MESSAGE, MODE_PRIVATE);
-
         String numeFisier=String.valueOf(contact.getId());
         preferencesMesajAnterior=getSharedPreferences(numeFisier,MODE_PRIVATE);
-
         mesajCreditNou.setOnClickListener(populateEditTextCreditNou());
         updateSumaCont.setOnClickListener(populateTvUpdateSumaCont());
         updateDobanda.setOnClickListener(populateTvUpdateDobanda());
@@ -150,7 +147,6 @@ public class SendMessageActivity extends AppCompatActivity {
                 if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
                     if(checkSelfPermission(Manifest.permission.SEND_SMS)== PackageManager.PERMISSION_GRANTED){
                         sendSMS();
-                        //aici salvez in fisierul de preferinte
                         saveSMSToSharedPreferences(); //aici salvez toate mesajele trimise
                         saveMessageOfContact(); //aici salvez ultimul mesaj trimis pt contact
                     }else{
@@ -167,7 +163,6 @@ public class SendMessageActivity extends AppCompatActivity {
             SmsManager smsManager=SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNo,null,mesaj,null,null);
             Toast.makeText(getApplicationContext(), R.string.trimis_cu_succes,Toast.LENGTH_LONG).show();
-            Log.i("NR DE TEL", phoneNo);
 
         }catch(Exception e){
             Toast.makeText(getApplicationContext(), R.string.failed_to_send,Toast.LENGTH_LONG).show();
@@ -178,16 +173,6 @@ public class SendMessageActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(contact!=null){
-//                    Date currentDate=new Date();
-//                    String data=DateConverter.fromDate(currentDate);
-//                    if(data.substring(0,5).equalsIgnoreCase(DateConverter.fromDate(contact.getDataNasterii()).substring(0,5))){
-//                        mesaj=getString(R.string.mesajLMA, contact.getPrenume());
-//                        etMesaj.setText(mesaj);
-//                    }else{
-//                        Toast.makeText(getApplicationContext(), R.string.invalid_birthdate_error,Toast.LENGTH_LONG).show();
-//                    }
-//                }
                 if(creditNou!=null){
                     mesaj=getString(R.string.mesajInserareCreditNou, contact.getPrenume(), creditNou.getDenumireCredit(),
                             creditNou.getSumaImprumutata());

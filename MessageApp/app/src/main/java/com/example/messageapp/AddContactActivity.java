@@ -13,17 +13,16 @@ import android.widget.Toast;
 import com.example.messageapp.database.model.Contact;
 import com.example.messageapp.database.model.ContactWithCredits;
 import com.example.messageapp.database.model.Credit;
-import com.example.messageapp.dialogs.CustomDialog;
+import com.example.messageapp.dialogs.AddCreditDialog;
 import com.example.messageapp.util.DateConverter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AddContactActivity extends AppCompatActivity implements CustomDialog.CustomDialogListener {
+public class AddContactActivity extends AppCompatActivity implements AddCreditDialog.CustomDialogListener {
     public static final String CONTACT_WITH_CREDITS_KEY = "contact with credits key";
     private final DateConverter dateConverter = new DateConverter();
-
 
     private Button btnAddCredit;
     private Button btnAddContact;
@@ -147,7 +146,7 @@ public class AddContactActivity extends AppCompatActivity implements CustomDialo
     }
 
     private void openDialog(){
-        CustomDialog dialog = new CustomDialog();
+        AddCreditDialog dialog = new AddCreditDialog();
         dialog.show(getSupportFragmentManager(), getString(R.string.dialog));
     }
 

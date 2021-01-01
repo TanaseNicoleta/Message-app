@@ -25,28 +25,6 @@ public class CreditService {
         taskRunner = new AsyncTaskRunner();
     }
 
-    public void getAllCredits(Callback<List<Credit>> callback) {
-        Callable<List<Credit>> callable = new Callable<List<Credit>>() {
-            @Override
-            public List<Credit> call() {
-                return creditDao.getAllCredits();
-            }
-        };
-        taskRunner.executeAsync(callable, callback);
-    }
-
-//    public void getCreditsAndNumberOfCredits(Callback<Map<String,Integer>> callback) {
-//        Callable<Map<String,Integer>> callable = new Callable<Map<String,Integer>>() {
-//            @Override
-//            public Map<String,Integer>call() {
-//                return creditDao.getCreditsAndNumber();
-//            }
-//        };
-//        taskRunner.executeAsync(callable, callback);
-//    }
-
-
-
     public void getAllCreditsForOneContact(Callback<List<Credit>> callback, final long contactId) {
         Callable<List<Credit>> callable = new Callable<List<Credit>>() {
             @Override
@@ -75,7 +53,6 @@ public class CreditService {
         };
         taskRunner.executeAsync(callable, callback);
     }
-
 
     public void update(Callback<Credit> callback, final Credit credit) {
         Callable<Credit> callable = new Callable<Credit>() {
