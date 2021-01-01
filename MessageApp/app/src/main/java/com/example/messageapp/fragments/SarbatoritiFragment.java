@@ -177,7 +177,12 @@ public class SarbatoritiFragment extends Fragment {
     private void saveSMSToSharePref(String mesaj) {
         SharedPreferences.Editor editor = preferences.edit();
         String mesajAnterior=preferences.getString(MESAJ,"");
-        String mesajDeScris=mesajAnterior+getString(R.string.separator_de_mesaje)+mesaj;
+        String mesajDeScris;
+        if(mesajAnterior.isEmpty()){
+            mesajDeScris=mesajAnterior+mesaj;
+        }else{
+            mesajDeScris=mesajAnterior+getString(R.string.separator_de_mesaje)+mesaj;
+        }
         editor.putString(MESAJ,mesajDeScris);
         editor.apply();
     }

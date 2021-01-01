@@ -262,7 +262,12 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
     private void saveToPreferencesMesaje(String mesaj) {
         SharedPreferences.Editor editor = preferencesMesaje.edit();
         String mesajAnterior=preferencesMesaje.getString(MESAJ,"");
-        String mesajDeScris=mesajAnterior+getString(R.string.separator_de_mesaje)+mesaj;
+        String mesajDeScris;
+        if(mesajAnterior.isEmpty()){
+            mesajDeScris=mesajAnterior+mesaj;
+        }else{
+            mesajDeScris=mesajAnterior+getString(R.string.separator_de_mesaje)+mesaj;
+        }
         editor.putString(MESAJ,mesajDeScris);
         editor.apply();
     }

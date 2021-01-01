@@ -70,7 +70,7 @@
     <string name="mesajUpdateDobanda">Draga %1$s, dobanda la creditul tau %2$s s-a modificat la %3$6.2f procente.</string>
     <string name="mesajTerminareCredit">Draga %1$s, creditul tau %2$s in valoare de %3$6.2f a fost achitat. </string>
     <string name="mesajInserareCreditNou">Draga %1$s, creditul tau %2$s in valoare de %3$6.2f a fost inregistrat. </string>
-    <string name="mesajUpdateComision">Draga %1$s, comisionul la banca %2$s este in prezent %3$6.2f</string>
+    <string name="mesajUpdateComision">Draga %1$s, comisionul la banca %2$s este in prezent %3$6.2f procente</string>
 
     <string name="toastTrimitereSMS">SMS trimis contactului %1$s</string>
     <string name="numeUser">%1$s %2$s</string>
