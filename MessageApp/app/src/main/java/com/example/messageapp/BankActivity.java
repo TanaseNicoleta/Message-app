@@ -63,13 +63,13 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
     ContactService contactService;
 
     public static final String BANK_LIST = "Bank list";
-    public static final String UPDATED_BANKS = "Updated banks";
     public static final String BANK_PREF = "BankPref";
+    public static final String UPDATED_BANKS = "Updated banks";
     private BottomNavigationView bottomNavigationView;
     private ListView lvBank;
     private List<Bank>bankList=new ArrayList<>();
     private Intent intent;
-    private SharedPreferences preferences;
+    private SharedPreferences clickedPreferences;
 
     ImageView ivSendSMS, map;
     Bank bancaEditata;
@@ -88,7 +88,7 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
     private void initComponents() {
         ivSendSMS=findViewById(R.id.iv_bank_activity_send_sms);
         lvBank=findViewById(R.id.lv_bank_detail);
-        map=findViewById(R.id.iv_bank_map);
+
         bottomNavigationView=findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_view_detalii_banca);
         bottomNavigationView.setOnNavigationItemSelectedListener(addBottomNavView());
@@ -99,38 +99,6 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
         getUserName();
 
         ivSendSMS.setOnClickListener(sendSMSEvent());
-
-        map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private View.OnClickListener sendSMSEvent() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(bancaEditata!=null){
-                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-                        if(checkSelfPermission(Manifest.permission.SEND_SMS)== PackageManager.PERMISSION_GRANTED){
-                            if(!contacts.isEmpty()){
-                                for(Contact contact:contacts){
-                                    sendSMS(contact);
-                                }
-                            }
-                            Toast.makeText(getApplicationContext(),getString(R.string.message_update),Toast.LENGTH_LONG).show();
-                        }else{
-                            requestPermissions(new String[]{Manifest.permission.SEND_SMS},1);
-                        }
-                    }
-                }else{
-                    Toast.makeText(getApplicationContext(), R.string.comision_nemodificat,Toast.LENGTH_LONG).show();
-                }
-            }
-        };
     }
 
     private void notifyAdapter() {
@@ -145,8 +113,8 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
                 Bank clickedBanca = (Bank) adapterView.getItemAtPosition(i);
                 EditBankDialog editBankDialog = new EditBankDialog();
                 editBankDialog.show(getSupportFragmentManager(), getString(R.string.dialog_edit_commission));
-                preferences = getSharedPreferences(UPDATED_BANKS, MODE_PRIVATE);
-                SharedPreferences.Editor e = preferences.edit();
+                clickedPreferences = getSharedPreferences(UPDATED_BANKS, MODE_PRIVATE);
+                SharedPreferences.Editor e = clickedPreferences.edit();
                 e.clear();
                 e.putString(String.valueOf(i), clickedBanca.toString());
                 e.commit();
@@ -157,8 +125,8 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
     }
 
     private void populateBankListFromPref() {
-        preferences = getSharedPreferences(BANK_PREF, Context.MODE_PRIVATE);
-        Map<String, ?> entries = preferences.getAll();
+        clickedPreferences = getSharedPreferences(BANK_PREF, Context.MODE_PRIVATE);
+        Map<String, ?> entries = clickedPreferences.getAll();
         if(entries.isEmpty()) {
             bankList= (List<Bank>) intent.getSerializableExtra(BANK_LIST);
             saveToPref(bankList);
@@ -187,39 +155,11 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener addBottomNavView() {
-        return new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId()==R.id.bottom_nav_view_acasa){
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    overridePendingTransition(0,0);
-                    return true;
-                }
-                else if(item.getItemId()==R.id.bottom_nav_view_detalii_banca){
-                    Intent intent=new Intent(getApplicationContext(), BankActivity.class);
-                    intent.putExtra(BANK_LIST,(Serializable)bankList);
-                    startActivity(intent);
-                    overridePendingTransition(0,0);
-                    return true;
-                }
-                else if(item.getItemId()==R.id.bottom_nav_view_profil){
-                    Intent intent=new Intent(getApplicationContext(),ProfileActivity.class);
-                    intent.putExtra(BANK_LIST,(Serializable)bankList);
-                    startActivity(intent);
-                    overridePendingTransition(0,0);
-                    return true;
-                }
-                return false;
-            }
-        };
-    }
-
     @Override
     public void sendBank(Bank bank) {
         bancaEditata=bank;
-        Map<String, ?> bankEntries = preferences.getAll();
-        SharedPreferences.Editor editor = preferences.edit();
+        Map<String, ?> bankEntries = clickedPreferences.getAll();
+        SharedPreferences.Editor editor = clickedPreferences.edit();
 
         for (Map.Entry<String, ?> bankEntry : bankEntries.entrySet()) {
             String dateBanca = bankEntry.getValue().toString();
@@ -245,7 +185,32 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
                 b.setComision(bank.getComision());
             }
         }
+        saveToPref(bankList);
         notifyAdapter();
+    }
+
+    private View.OnClickListener sendSMSEvent() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bancaEditata!=null){
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+                        if(checkSelfPermission(Manifest.permission.SEND_SMS)== PackageManager.PERMISSION_GRANTED){
+                            if(!contacts.isEmpty()){
+                                for(Contact contact:contacts){
+                                    sendSMS(contact);
+                                }
+                            }
+                            Toast.makeText(getApplicationContext(),getString(R.string.message_update),Toast.LENGTH_LONG).show();
+                        }else{
+                            requestPermissions(new String[]{Manifest.permission.SEND_SMS},1);
+                        }
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), R.string.comision_nemodificat,Toast.LENGTH_LONG).show();
+                }
+            }
+        };
     }
 
     private Callback<List<Contact>> getAllContactsFromDbCallback() {
@@ -322,4 +287,33 @@ public class BankActivity extends AppCompatActivity implements EditBankDialog.Ed
             }
         });
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener addBottomNavView() {
+        return new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getItemId()==R.id.bottom_nav_view_acasa){
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                }
+                else if(item.getItemId()==R.id.bottom_nav_view_detalii_banca){
+                    Intent intent=new Intent(getApplicationContext(), BankActivity.class);
+                    intent.putExtra(BANK_LIST,(Serializable)bankList);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                    return true;
+                }
+                else if(item.getItemId()==R.id.bottom_nav_view_profil){
+                    Intent intent=new Intent(getApplicationContext(),ProfileActivity.class);
+                    intent.putExtra(BANK_LIST,(Serializable)bankList);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                    return true;
+                }
+                return false;
+            }
+        };
+    }
+
 }

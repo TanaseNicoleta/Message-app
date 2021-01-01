@@ -46,7 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
                     final String Telefon = telefon.getText().toString().trim();
                     final String Parola = parola.getText().toString().trim();
 
-
                     mAuth.createUserWithEmailAndPassword(Email, Parola).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

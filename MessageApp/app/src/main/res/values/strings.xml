@@ -126,5 +126,5 @@
     <string name="message_update">Toate contactele au primit mesaj de update comision</string>
     <string name="cauta">Cauta o banca</string>
     <string name="comision_nemodificat">Nu ati updatat niciun comision</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyARbZ0J_XJ0VMSBwLQDWgcPM5pvMppHzbQ</string>
+    <string name="err_comision">Eroare comision: comisionul trebuie sa fie intre 0 si 1.</string>
 </resources>

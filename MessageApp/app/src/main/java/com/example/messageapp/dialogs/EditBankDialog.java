@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,13 +25,12 @@ import java.util.Map;
 public class EditBankDialog extends AppCompatDialogFragment {
     public static final String BANK_PREF = "BankPref";
     public static final String UPDATED_BANKS = "Updated banks";
-    public static final String COMISION = "Comision";
     private EditText etComision;
     private TextView tvAdresa, tvDenumire;
     Float oldCom = null;
     String denumire, adresa;
     private Bank bank;
-    private SharedPreferences preferences, clickedPref;
+    private SharedPreferences clickedPref;
     EditBankDialogListener listener;
 
     @NonNull
@@ -37,9 +38,8 @@ public class EditBankDialog extends AppCompatDialogFragment {
     public android.app.Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.layout_edit_bank_commission_dialog, null);
+        final View view = inflater.inflate(R.layout.layout_edit_bank_commission_dialog, null);
         initComponents(view);
-        preferences = this.getActivity().getSharedPreferences(BANK_PREF, Context.MODE_PRIVATE);
         clickedPref = this.getActivity().getSharedPreferences(UPDATED_BANKS, Context.MODE_PRIVATE);
 
         Map<String, ?> entries = clickedPref.getAll();
@@ -67,8 +67,13 @@ public class EditBankDialog extends AppCompatDialogFragment {
         .setPositiveButton(R.string.salveaza, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                bank.setComision(Float.parseFloat(etComision.getText().toString().trim()));
-                listener.sendBank(bank);
+                Float comisionNou = Float.parseFloat(etComision.getText().toString().trim());
+                if(comisionNou > 0 && comisionNou < 1) {
+                    bank.setComision(comisionNou);
+                    listener.sendBank(bank);
+                } else {
+                    Toast.makeText(view.getContext(), R.string.err_comision, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -77,6 +82,7 @@ public class EditBankDialog extends AppCompatDialogFragment {
 
     private void initComponents(View view) {
         etComision = view.findViewById(R.id.input_edit_commission);
+        etComision.setInputType(InputType.TYPE_CLASS_NUMBER);
         tvDenumire = view.findViewById(R.id.tv_bank_name);
         tvAdresa = view.findViewById(R.id.tv_bank_adress);
     }
