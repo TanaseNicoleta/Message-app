@@ -82,7 +82,7 @@ public class EditBankDialog extends AppCompatDialogFragment {
 
     private void initComponents(View view) {
         etComision = view.findViewById(R.id.input_edit_commission);
-        etComision.setInputType(InputType.TYPE_CLASS_NUMBER);
+       // etComision.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         tvDenumire = view.findViewById(R.id.tv_bank_name);
         tvAdresa = view.findViewById(R.id.tv_bank_adress);
     }
