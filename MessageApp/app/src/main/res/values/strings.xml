@@ -68,8 +68,8 @@
     <string name="mesajLMA">Draga %1$s, in aceasta zi speciala echipa noastra iti ureaza La multi ani!</string>
     <string name="mesajUpdateSumaCont">Draga %1$s, te anuntam ca ti s-a modificat suma contului. Acum detii %2$6.2f lei.</string>
     <string name="mesajUpdateDobanda">Draga %1$s, dobanda la creditul tau %2$s s-a modificat la %3$6.2f procente.</string>
-    <string name="mesajTerminareCredit">Draga %1$s, creditul tau %2$s in valoare de %3$6.2f a fost achitat. </string>
-    <string name="mesajInserareCreditNou">Draga %1$s, creditul tau %2$s in valoare de %3$6.2f a fost inregistrat. </string>
+    <string name="mesajTerminareCredit">Draga %1$s, creditul tau %2$s in valoare de %3$6.2f lei a fost achitat. </string>
+    <string name="mesajInserareCreditNou">Draga %1$s, creditul tau %2$s in valoare de %3$6.2f lei a fost inregistrat. </string>
     <string name="mesajUpdateComision">Draga %1$s, comisionul la banca %2$s este in prezent %3$6.2f procente</string>
 
     <string name="toastTrimitereSMS">SMS trimis contactului %1$s</string>
