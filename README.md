@@ -46,19 +46,23 @@ butoane: în stânga este butonul ce afișează utilizatorului ultimul mesaj tri
 client, iar în dreapta butonul ce deschide activitatea cu opțiunile de trimitere a mesajelor.
 Utilizatorul poate alege de aici să îi trimită contactului mesaj de: înregistrare a unui nou
 credit, editare sumă cont, editare dobândă sau terminare credit.
+
 b. Opțiunea de ”Mesaje” din activitatea principală deschide o lista cu istoricul mesajelor
 trimise.
 
 c. Opțiunea de ”Adaugă contact” din activitatea principală deschide formularul de creare
 și inserare în baza de date a unui nou contact. Tot de aici putem deschide dialogul de
 adăugare a unui credit noului contact creat.
+
 d. Butonul de rapoarte deschide o activitate unde utilizatorul poate vedea două liste:
 sărbătoriți și îndatorați, dar și grafice pe baza acestor liste. De asemenea putem trimite
 mesaje aniversare tuturor din lista de sărbătoriți.
+
 e. După selectarea butonului ”Bănci” din meniu, utilizatorul va vedea o listă a băncilor
 partenere cu datele acestora. Utilizatorului îi este permis să modifice comisionul unei
 bănci, dar nu și denumirea și adresa acesteia. În urma modificării comisionului uneia
 sau mai multor bănci, putem notifica utilizatorii, dacă dorim acest lucru. Tot din această
 activitate, utilizatorul poate deschide o hartă pentru a căuta adresa băncilor partenere.
+
 f. Opțiunea de ”Profil” din meniu, afișează utilizatorului datele profilului său și îi permite
 acestuia deconectarea, dar și modificarea datelor personale.
